@@ -26,7 +26,9 @@ public:
             }
             else 
             {
-                if(isPalindrome(s,l+1,h) || isPalindrome(s,l,h-1))
+                if(isPalindrome(s,l+1,h))
+                    return true;
+                else if(isPalindrome(s,l,h-1))
                     return true;
                 else 
                     return false;
