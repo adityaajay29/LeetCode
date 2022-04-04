@@ -64,27 +64,6 @@ public:
         }
         curr->val=temp1;
         
-        // cout<<temp<<endl;
-        
-//         while(i<=n-k && curr->next!=NULL)
-//         {
-//             curr=curr->next;
-//             i++;
-//         }
-        
-//         int store=curr->val;
-//         // cout<<store;
-//         curr->val=temp;
-//         curr=head;
-//         int j=1;
-        
-//         while(curr->next && j<k)
-//         {
-//             curr=curr->next;
-//             j++;
-//         }
-//         curr->val=store;
         return head;
-        
     }
 };
