@@ -5,7 +5,7 @@ public:
     vector<int>dy{0,1,-1,0};
     
     void dfs(vector<vector<char>>& board, int x, int y, int m, int n) {
-        if(x<0 or y<0 or x>=m or y>=n or board[x][y] != 'O') return;
+        if(x<0 || y<0 || x>=m || y>=n || board[x][y] != 'O') return;
         board[x][y] = '#';
         for(int i=0;i<4;i++)
         {
