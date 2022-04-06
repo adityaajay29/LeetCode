@@ -12,6 +12,9 @@ public:
         {
             int mid=l+(h-l)/2;
             bool res=isBadVersion(mid);
+//             if mid is bad version, check if its previous version is bad or not
+//             if the previous version is bad, then decrement high
+//             else, simply return mid, as it is the first bad version
             if(res)
             {
                 if(!isBadVersion(mid-1))
