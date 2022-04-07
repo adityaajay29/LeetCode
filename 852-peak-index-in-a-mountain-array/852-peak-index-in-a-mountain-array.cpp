@@ -1,11 +1,18 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
-        priority_queue<pair<int,int> >pq;
-        for(int i=0;i<arr.size();i++)
+        // priority_queue<pair<int,int> >pq;
+        // for(int i=0;i<arr.size();i++)
+        // {
+        //     pq.push({arr[i],i});
+        // }
+        // return pq.top().second;
+        
+        for(int i=1;i<arr.size();i++)
         {
-            pq.push({arr[i],i});
+            if(arr[i]<arr[i-1])
+                return i-1;
         }
-        return pq.top().second;
+        return -1;
     }
 };
