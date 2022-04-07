@@ -8,11 +8,23 @@ public:
         // }
         // return pq.top().second;
         
-        for(int i=1;i<arr.size();i++)
+        // for(int i=1;i<arr.size();i++)
+        // {
+        //     if(arr[i]<arr[i-1])
+        //         return i-1;
+        // }
+        // return -1;
+        
+        int l=0;
+        int h=arr.size()-1;
+        while(l<h)
         {
-            if(arr[i]<arr[i-1])
-                return i-1;
+            int mid=l+(h-l)/2;
+            if(arr[mid+1]>arr[mid])
+                l=mid+1;
+            else 
+                h=mid;
         }
-        return -1;
+        return l;
     }
 };
