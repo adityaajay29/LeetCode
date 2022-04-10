@@ -2,6 +2,7 @@ class Solution {
 public:
     int calPoints(vector<string>& ops) {
         stack<int>s;
+        int a,b;
         for(auto x:ops)
         {
             if(x=="C")
@@ -10,9 +11,9 @@ public:
                 s.push(2*s.top());
             else if(x=="+")
             {
-                int a=s.top();
+                a=s.top();
                 s.pop();
-                int b=s.top();
+                b=s.top();
                 s.push(a);
                 s.push(a+b);
             }
