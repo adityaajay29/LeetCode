@@ -9,19 +9,21 @@ public:
     {
         if(x<0 || x>=m || y<0 || y>=n || visited[x][y])
             return false;
-        if(image[x][y]!=image[sr][sc])
-            return false;
+        // if(image[x][y]!=image[sr][sc])
+        //     return false;
         return true;
     }
     
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        vector<vector<int>>v;
-        v=image;
+        // vector<vector<int>>v;
+        // v=image;
         int m=image.size();
         int n=image[0].size();
         queue<pair<int,int>>q;
         q.push({sr,sc});
         visited[sr][sc]=1;
+        int temp=image[sr][sc];
+        image[sr][sc]=-1;
         while(!q.empty())
         {
             int x=q.front().first;
@@ -31,15 +33,25 @@ public:
             {
                 int xNext=x+dx[i];
                 int yNext=y+dy[i];
-                if(isvalid(m,n,xNext,yNext,image,sr,sc) && image[xNext][yNext]==image[sr][sc])
+                if(isvalid(m,n,xNext,yNext,image,sr,sc))
                 {
-                    v[xNext][yNext]=newColor;
-                    visited[xNext][yNext]=1;
-                    q.push({xNext,yNext});
+                    if(image[xNext][yNext]==-1 || image[xNext][yNext]==temp)
+                    {
+                        image[xNext][yNext]=-1;
+                        visited[xNext][yNext]=1;
+                        q.push({xNext,yNext});
+                    }
                 }
             }
         }
-        v[sr][sc]=newColor;
-        return v;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(image[i][j]==-1)
+                    image[i][j]=newColor;
+            }
+        }
+        return image;
     }
 };
