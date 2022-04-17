@@ -11,27 +11,24 @@
  */
 class Solution {
 public:
-    queue<TreeNode *>q;
+    
+    TreeNode *temp;
+    
     void inorder(TreeNode *root)
     {
         if(!root)
             return;
         inorder(root->left);
-        q.push(new TreeNode(root->val));
+        temp->right=root;
+        root->left=nullptr;
+        temp=root;
         inorder(root->right);
     }
     
     TreeNode* increasingBST(TreeNode* root) {
+        TreeNode *ans=new TreeNode(0);
+        temp=ans;
         inorder(root);
-        TreeNode *dummy = new TreeNode(0);
-        TreeNode *curr=dummy;
-        while(!q.empty())
-        {
-            curr->right=q.front();
-            curr->left=NULL;
-            curr=curr->right;
-            q.pop();
-        }
-        return dummy->right;
+        return ans->right;
     }
 };
