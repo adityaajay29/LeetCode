@@ -11,34 +11,33 @@
  */
 class BSTIterator {
 public:
+//     stack will keep sure that max elements in the stack at a time is the depth of the tree
+//     SC : O(h)
     
-    vector<TreeNode *>v;
+    stack<TreeNode *>s;
     
     void pushNodes(TreeNode *root)
     {
-        if(!root)
-            return;
-        pushNodes(root->left);
-        v.push_back(root);
-        pushNodes(root->right);
+        while(root)
+        {
+            s.push(root);
+            root=root->left;
+        }
     }
-    
     
     BSTIterator(TreeNode* root) {
         pushNodes(root);
-        reverse(v.begin(),v.end());
     }
     
     int next() {
-        TreeNode* node=v[v.size()-1];
-        v.pop_back();
+        TreeNode *node=s.top();
+        s.pop();
+        pushNodes(node->right);
         return node->val;
     }
     
     bool hasNext() {
-        if(v.size()==0)
-            return false;
-        return true;
+        return (!s.empty());
     }
 };
 
