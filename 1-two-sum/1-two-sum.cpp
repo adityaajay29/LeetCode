@@ -6,16 +6,13 @@ public:
         unordered_map<int,int>mp;
         for(int i=0;i<n;i++)
         {
-            for(auto x:mp)
+            if(mp.find(target-nums[i])!=mp.end())
             {
-                if(x.second==target-nums[i])
-                {
-                    ans.push_back(i);
-                    ans.push_back(x.first);
-                    return ans;
-                }
+                ans.push_back(i);
+                ans.push_back(mp[target-nums[i]]);
+                return ans;
             }
-            mp[i]=nums[i];
+            mp[nums[i]]=i;
         }
         return {};
     }
