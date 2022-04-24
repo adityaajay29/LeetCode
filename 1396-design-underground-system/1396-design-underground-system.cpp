@@ -19,6 +19,8 @@ public:
         string travel=check[id].first+"->"+stationName;
 //         updating the travel time and its frequency for a given travel detail
         time[travel]={(t-check[id].second)+time[travel].first,time[travel].second+1};
+//         free up memory for completed id
+        check.erase(id);
     }
     
     double getAverageTime(string startStation, string endStation) {
