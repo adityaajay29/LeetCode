@@ -1,49 +1,49 @@
 class Solution {
 public:
     bool backspaceCompare(string s, string t) {
-        if(s==t)
-            return true;
-        int n=s.size();
-        int m=t.size();
-//         count the backspaces
-        int count=0;
-        string a,b;
-//         start from last char
-        for(int i=n-1;i>=0;i--)
+        int i=s.size()-1;
+        int j=t.size()-1;
+        int countS=0;
+        int countT=0;
+        while(i>=0 || j>=0)
         {
-//             if s[i] isn't a backspace, check if there were previous backspaces or not
-            if(s[i]!='#')
+            while(i>=0)
             {
-//                 if there were backspaces, then skip that char and decrease the count 
-                if(count>0)
-                    count--;
+                if(s[i]=='#')
+                {
+                    countS++;
+                    i--;
+                }
+                else if(countS>0)
+                {
+                    countS--;
+                    i--;
+                }
                 else 
-//                     if there were no backspaces, push that char to string, as it will not be erased
-                    a.push_back(s[i]);
+                    break;
             }
-//             if char is a backspace, then increase its count
-            else 
+            while(j>=0)
             {
-                count++;
-            }
-        }
-//         check the same for 2nd string
-        count=0;
-        for(int i=m-1;i>=0;i--)
-        {
-            if(t[i]!='#')
-            {
-                if(count>0)
-                    count--;
+                if(t[j]=='#')
+                {
+                    countT++;
+                    j--;
+                }
+                else if(countT>0)
+                {
+                    countT--;
+                    j--;
+                }
                 else 
-                    b.push_back(t[i]);
+                    break;
             }
-            else 
-            {
-                count++;
-            }
+            if(i>=0 && j>=0 && s[i]!=t[j])
+                return false;
+            if((i>=0) != (j>=0))
+                return false;
+            i--;
+            j--;
         }
-//         return true if both the strings a,b are same at last
-        return a==b;
+        return true;
     }
 };
