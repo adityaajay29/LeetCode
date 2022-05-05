@@ -2,24 +2,21 @@ class MyStack {
 public:
     queue<int> q;
     
-    void reverse()
-    {
-        if(q.size()==0)
-            return;
-        int temp=q.front();
-        q.pop();
-        reverse();
-        q.push(temp);
-    }
-    
     MyStack() {
         
     }
     
     void push(int x) {
-        reverse();
         q.push(x);
-        reverse();
+        int sz=q.size();
+//         atleast 1 ele should be there
+        while(sz>1)
+        {
+            int temp=q.front();
+            q.pop();
+            q.push(temp);
+            sz--;
+        }
     }
     
     int pop() {
