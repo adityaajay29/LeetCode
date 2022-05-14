@@ -1,51 +1,42 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        int ans=INT_MIN;
-        vector<pair<int,int> >list[101];
-        for(vector<int> &temp:times)
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        vector<int> distance(n+1, INT_MAX);
+        vector<pair<int, int>> list[n+1];
+        for(int i=0;i<times.size();i++)
         {
-            int u=temp[0];
-            int v=temp[1];
-            int time=temp[2];
-            list[u].push_back({v,time});
+            int u=times[i][0];
+            int v=times[i][1];
+            int wt=times[i][2];
+            list[u].push_back({v, wt});
+            // list[v].push_back({u, wt});
         }
-        // for(int i=1;i<=m;i++)
-        // {
-        //     for(auto x:list[i])
-        //     {
-        //         cout<<i<<" "<<x.first<<" "<<x.second;
-        //     }
-        //     cout<<endl;
-        // }
-        priority_queue<pair<int,int>,vector<pair<int,int> >,greater<pair<int,int>> >pq;
-        vector<int>distance(n+1,INT_MAX);
         distance[k]=0;
-        pq.push({distance[k],k});
+        pq.push({0, k});
         while(!pq.empty())
         {
-            int dist=pq.top().first;
-            int curr=pq.top().second;
+            int wt=pq.top().first;
+            int node = pq.top().second;
             pq.pop();
-            if(dist>distance[curr])
+            if(wt>distance[node])
                 continue;
-            for(auto x:list[curr])
+            for(auto x:list[node])
             {
-                if(distance[x.first]>dist+x.second)
+                if(distance[x.first]> wt+x.second)
                 {
-                    distance[x.first]=dist+x.second;
-                    pq.push({distance[x.first],x.first});
+                    distance[x.first]=wt+x.second;
+                    pq.push({distance[x.first], x.first});
                 }
             }
         }
-        for(int i=1;i<=n;i++)
+        int ans=INT_MIN;
+        for(int i=1; i<=n;i++)
         {
-            ans=max(ans,distance[i]);
+            ans=max(ans, distance[i]);
         }
-        for(int i=1;i<=n;i++)
-            cout<<distance[i]<<" ";
         if(ans==INT_MAX)
             return -1;
         return ans;
-    }
+     }
 };
