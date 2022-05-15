@@ -11,31 +11,30 @@
  */
 class Solution {
 public:
-    int deepestLeavesSum(TreeNode* root) {
-        queue<pair<TreeNode*, int>> q;
-        stack<pair<int, int>> s;
-        TreeNode *curr=root;
-        q.push({root, 1});
-        while(curr && !q.empty())
+    
+    int sum = 0;
+    
+    int dfs(TreeNode* root,int &depth, int lvl = 0) 
+    {
+        if(!root) 
+            return 0;
+        if(!root -> left && !root -> right)
         {
-            TreeNode *temp=q.front().first;
-            int lvl=q.front().second;
-            q.pop();
-            s.push({temp->val, lvl});
-            if(temp->left)
-                q.push({temp->left, lvl+1});
-            if(temp->right)
-                q.push({temp->right, lvl+1});
-            curr=q.front().first;
+            if(lvl == depth) 
+                sum += root -> val;
+            else if(lvl > depth)
+            {
+                sum = root -> val;
+                depth = lvl; 
+            }
         }
-        int sum=s.top().first;
-        int lvl=s.top().second;
-        s.pop();
-        while(!s.empty() && s.top().second == lvl)
-        {
-            sum+=s.top().first;
-            s.pop();
-        }
+        dfs(root -> left, depth, lvl + 1); 
+        dfs(root -> right, depth, lvl + 1);
         return sum;
+    }
+
+    int deepestLeavesSum(TreeNode* root) {
+        int depth=0;
+        return dfs(root, depth, 0);
     }
 };
