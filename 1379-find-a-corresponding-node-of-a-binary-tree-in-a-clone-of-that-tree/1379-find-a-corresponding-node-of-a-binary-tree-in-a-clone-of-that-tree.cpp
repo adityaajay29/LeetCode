@@ -10,24 +10,15 @@
 
 class Solution {
 public:
-    TreeNode *ans=NULL;
-    
-    void dfs(TreeNode *original, TreeNode *cloned, TreeNode *target)
-    {
-        if(!cloned && !original)
-            return;
-        dfs(original->left, cloned->left, target);
-//         follow-up : we have to compare the nodes themselves, not the vals
-        if(original == target)
-        {
-            ans=cloned;
-            return;
-        }
-        dfs(original->right, cloned->right, target);
-    }
-    
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
-        dfs(original, cloned, target);
-        return ans;
+        if(!cloned)
+            return nullptr;
+        if(original == target)
+            return cloned;
+        TreeNode *left=getTargetCopy(original->left, cloned->left, target);
+        if(left)
+            return left;
+        TreeNode *right=getTargetCopy(original->right, cloned->right, target);
+        return right;
     }
 };
