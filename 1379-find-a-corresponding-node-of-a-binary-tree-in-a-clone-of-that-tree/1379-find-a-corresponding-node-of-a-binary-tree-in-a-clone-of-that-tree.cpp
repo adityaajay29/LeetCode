@@ -12,21 +12,22 @@ class Solution {
 public:
     TreeNode *ans=NULL;
     
-    void dfs(TreeNode *cloned, TreeNode *target)
+    void dfs(TreeNode *original, TreeNode *cloned, TreeNode *target)
     {
-        if(!cloned)
+        if(!cloned && !original)
             return;
-        dfs(cloned->left, target);
-        if(cloned->val == target->val)
+        dfs(original->left, cloned->left, target);
+//         follow-up : we have to compare the nodes themselves, not the vals
+        if(original == target)
         {
             ans=cloned;
             return;
         }
-        dfs(cloned->right, target);
+        dfs(original->right, cloned->right, target);
     }
     
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
-        dfs(cloned, target);
+        dfs(original, cloned, target);
         return ans;
     }
 };
