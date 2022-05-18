@@ -1,18 +1,18 @@
 class Solution {
 public:
     string destCity(vector<vector<string>>& paths) {
-        unordered_map<string, vector<string>> mp;
-        unordered_set<string> s;
+        unordered_set<string> s1;
+        unordered_set<string> s2;
         for(int i=0;i<paths.size();i++)
         {
             string u=paths[i][0];
             string v=paths[i][1];
-            mp[u].push_back(v);
-            s.insert(v);
+            s1.insert(v);
+            s2.insert(u);
         }
-        for(auto x:s)
+        for(auto x:s1)
         {
-            if(mp.find(x) == mp.end())
+            if(s2.find(x) == s2.end())
                 return x;
         }
         return "";
