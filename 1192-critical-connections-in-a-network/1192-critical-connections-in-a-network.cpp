@@ -21,17 +21,15 @@ public:
             else
             {
                 dfs(list, ans, x, i, intime, low, visited, timer);
-//                 on returning, if the lowtime of x is more than intime of i, 
-//                 means there was no ancestor 
-                if(low[x] > intime[i])
-                {
-                    vector<int> bridge;
-                    bridge.push_back(i);
-                    bridge.push_back(x);
-                    ans.push_back(bridge);
-                }
 //                 update the low time of i
                 low[i]=min(low[i], low[x]);
+//                 on returning, if the lowtime of x is more than intime of i, 
+//                 means there was no ancestor , so we found a bridge
+                if(low[x] > intime[i])
+                {
+                    vector<int> bridge{i, x};
+                    ans.push_back(bridge);
+                }
             }
         }
     }
@@ -47,6 +45,7 @@ public:
             list[u].push_back(v);
             list[v].push_back(u);
         }
+//         creating required arrays
         
         vector<int> intime(100001, INT_MAX);
         vector<int> low(100001, INT_MAX);
