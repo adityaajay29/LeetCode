@@ -18,10 +18,7 @@ public:
         {
             for(int j=1;j<n;j++)
             {
-                if(obstacleGrid[i][j] == 0)
-                    obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1];
-                else
-                    obstacleGrid[i][j] = 0;
+                obstacleGrid[i][j] = (obstacleGrid[i][j] == 1 ? 0 : obstacleGrid[i-1][j] + obstacleGrid[i][j-1]);
             }
         }
         return obstacleGrid[m-1][n-1];
