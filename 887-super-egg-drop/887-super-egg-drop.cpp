@@ -27,13 +27,13 @@ public:
             int breaks = solver(k-1, mid-1);
             int notBreaks = solver(k, n-mid);
             int worstCase = 1 + max(breaks, notBreaks);
+            attempts = min(attempts, worstCase);
             if(breaks < notBreaks)
 //                 to get min attempts in worst case, we goto above floors
                 l = mid + 1;
             else
 //                 to goto min attempts in worst case, we goto lower floors
                 h = mid - 1;
-            attempts = min(attempts, worstCase);
         }
         return dp[k][n] = attempts;
     }
