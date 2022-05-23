@@ -3,22 +3,23 @@ public:
     
     int dp[601][101][101];
     
-    int helper(vector<pair<int, int>> &store, int m, int n, int i)
+    int helper(vector<pair<int, int>> &store, int m, int n, int sz)
     {
-        if(i == store.size() || (n == 0 && m == 0))
+        if(sz == 0 || (n == 0 && m == 0))
             return 0;
         
-        if(dp[i][m][n] != -1)
-            return dp[i][m][n];
+        if(dp[sz][m][n] != -1)
+            return dp[sz][m][n];
         
-        if(store[i].first > m || store[i].second > n)
-            return dp[i][m][n] = helper(store, m, n, i+1);
+        if(store[sz-1].first > m || store[sz-1].second > n)
+            return dp[sz][m][n] = helper(store, m, n, sz-1);
         
-        int include = 1 + helper(store, m - store[i].first, n - store[i].second, i+1);
-        int exclude = helper(store, m, n, i+1);
-        return dp[i][m][n] = max(include, exclude);
+        int include = 1 + helper(store, m - store[sz-1].first, n - store[sz-1].second, sz-1);
+        int exclude = helper(store, m, n, sz-1);
+        
+        return dp[sz][m][n] = max(include, exclude);
     }
-    
+     
     int findMaxForm(vector<string>& strs, int m, int n) {
         vector<pair<int, int>> store;
         for(string s : strs)
@@ -35,6 +36,6 @@ public:
             store.push_back({count0, count1});
         }
         memset(dp, -1, sizeof(dp));
-        return helper(store, m, n, 0);
+        return helper(store, m, n, store.size());
     }
 };
