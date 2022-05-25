@@ -3,28 +3,34 @@ public:
     void setZeroes(vector<vector<int>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
-        vector<int> row(m, 1);
-        vector<int> col(n, 1);
+        int col0 = 1;
         for(int i=0;i<m;i++)
         {
-            for(int j=0;j<n;j++)
+//             any guy at 0th col is 0, set col0 as 0
+            if(matrix[i][0] == 0)
+                col0 = 0;
+//             excluding 1st column, as it will be checked by col0 
+            for(int j=1;j<n;j++)
             {
                 if(matrix[i][j] == 0)
                 {
-                    row[i] = 0;
-                    col[j] = 0;
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
-        for(int i=0;i<m;i++)
+        for(int i=m-1;i>=0;i--)
         {
-            for(int j=0;j<n;j++)
+            for(int j=n-1;j>=1;j--)
             {
-                if(row[i] == 0 || col[j] == 0)
+                if(matrix[i][0] == 0 || matrix[0][j] == 0)
                 {
                     matrix[i][j] = 0;
                 }
             }
+//             explicitly checking for 0th col
+            if(col0 == 0)
+                matrix[i][0] = 0;
         }
     }
 };
