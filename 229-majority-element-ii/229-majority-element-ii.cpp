@@ -8,7 +8,7 @@ public:
         {
             mp[x]++;
         }
-        for(auto x : mp)
+        for(pair<int, int> x : mp)
         {
             if(x.second > n/3)
                 ans.push_back(x.first);
