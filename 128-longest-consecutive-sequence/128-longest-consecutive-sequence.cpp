@@ -4,9 +4,8 @@ public:
         unordered_set<int> s;
         for(int x : nums)
             s.insert(x);
-        int count = 1;
         int ans = 0;
-        for(int x : nums)
+        for(int x : s)
         {
             if(s.find(x - 1) == s.end())
             {
