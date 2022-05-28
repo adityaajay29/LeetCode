@@ -8,23 +8,19 @@ public:
         if(n == 0)
             return 0;
         
-        set<int> s;
+        sort(nums.begin(), nums.end());
         
-        for(int x : nums)
+        for(int i=1;i<n;i++)
         {
-            s.insert(x);
-        }
-        vector<int> temp;
-        for(auto x : s)
-        {
-            temp.push_back(x);
-        }
-        for(int i=0;i<temp.size()-1;i++)
-        {
-            if(temp[i+1] - temp[i] == 1)
-                count++;
-            else 
-                count = 1;
+            if(nums[i] != nums[i-1])
+            {
+                if(nums[i] - nums[i-1] == 1)
+                    count++;
+                else 
+                {
+                    count = 1;
+                }
+            }
             ans = max(ans, count);
         }
         return ans;
