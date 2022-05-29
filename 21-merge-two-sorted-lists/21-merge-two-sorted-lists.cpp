@@ -13,62 +13,26 @@ public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         if(list1 == nullptr)
             return list2;
-        
         if(list2 == nullptr)
             return list1;
-        
-        ListNode *newHead = new ListNode;
-        ListNode *temp = new ListNode;
-        ListNode *curr1 = list1;
-        ListNode *curr2 = list2;
-        
-        if(curr1->val <= curr2->val)
+//         assuming list1->val is smaller
+        ListNode *small = list1;
+        ListNode *large = list2;
+//         assigning small to whichever is smaller
+        if(list1->val > list2->val)
+            swap(small, large);
+        ListNode *head = small;
+        while(small != nullptr && large != nullptr)
         {
-            newHead->val = curr1->val;
-            temp = newHead;
-            curr1 = curr1->next;
-        }
-        else
-        {
-            newHead->val = curr2->val;
-            temp = newHead;
-            curr2 = curr2->next;
-        }
-        
-        while(curr1 != nullptr && curr2 != nullptr)
-        {
-            ListNode *next = new ListNode;
-            if(curr1->val <= curr2->val)
+            ListNode *temp = nullptr;
+            while(small != nullptr && small->val <= large->val)
             {
-                next->val = curr1->val;
-                temp->next = next;
-                temp = temp->next;
-                curr1 = curr1->next;
+                temp = small;
+                small = small->next;
             }
-            else
-            {
-                next->val = curr2->val;
-                temp->next = next;
-                temp = temp->next;
-                curr2 = curr2->next;
-            }
+            temp->next = large;
+            swap(small, large);
         }
-        while(curr1 != nullptr)
-        {
-            ListNode *next = new ListNode;
-            next->val = curr1->val;
-            temp->next = next;
-            temp = temp->next;
-            curr1 = curr1->next;
-        }
-        while(curr2 != nullptr)
-        {
-            ListNode *next = new ListNode;
-            next->val = curr2->val;
-            temp->next = next;
-            temp = temp->next;
-            curr2 = curr2->next;
-        }
-        return newHead;
+        return head;
     }
 };
