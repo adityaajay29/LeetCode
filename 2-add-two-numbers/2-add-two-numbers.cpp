@@ -16,17 +16,17 @@ public:
         ListNode *head = new ListNode(0);
         int carry = 0;
         ListNode *temp = head;
+        
         while(a != nullptr || b != nullptr)
         {
             ListNode *next = new ListNode;
             int sum = 0;
             
-            if(a != nullptr && b != nullptr)
-                sum = a->val + b->val + carry;
-            else if(a != nullptr)
-                sum = a->val + carry;
-            else if(b != nullptr)
-                sum = b->val + carry;
+            if(a != nullptr)
+                sum += a->val;
+            if(b != nullptr)
+                sum += b->val;
+            sum += carry;
             
             if(sum <= 9)
             {
@@ -37,6 +37,7 @@ public:
                 sum %= 10;
                 carry = 1;
             }
+            
             next->val = sum;
             temp->next = next;
             temp = temp->next;
