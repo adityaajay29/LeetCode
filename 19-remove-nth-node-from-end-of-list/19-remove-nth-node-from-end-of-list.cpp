@@ -15,7 +15,7 @@ public:
         dummy->next = head;
         ListNode *slow = dummy;
         ListNode *fast = dummy;
-        while(n >= 1 && fast->next != nullptr)
+        while(n && fast->next != nullptr)
         {
             fast = fast->next;
             n--;
