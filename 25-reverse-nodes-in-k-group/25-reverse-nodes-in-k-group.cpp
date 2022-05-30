@@ -11,32 +11,33 @@
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(head == nullptr)
-            return nullptr;
-        
-        vector<int> v;
-        ListNode *curr = head;
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *prev = dummy;
+        ListNode *curr = dummy;
+        ListNode *next = dummy;
+        int sz = 0;
+        curr = head;
         while(curr)
         {
-            v.push_back(curr->val);
+            sz++;
             curr = curr->next;
         }
-        for(int i=0;i<v.size();i+=k)
-        {
-            if(v.size()-i >= k)
+        while(sz >= k)
+        { 
+            curr = prev->next;
+            next = curr->next;
+//             swapping individual nodes of each group
+//             if group size is k, there will be k-1 reversals in that group
+            for(int i=1;i<k;i++)
             {
-                reverse(v.begin()+i, v.begin()+i+k);
+                curr->next = next->next;
+                next->next = prev->next;
+                prev->next = next;
+                next = curr->next;
             }
-        }
-        int i=0;
-        ListNode *dummy = new ListNode(0);
-        ListNode *temp = dummy;
-        while(i<v.size())
-        {
-            ListNode *next = new ListNode(v[i]);
-            temp->next = next;
-            temp = temp->next;
-            i++;
+            prev = curr;
+            sz -= k;
         }
         return dummy->next;
     }
