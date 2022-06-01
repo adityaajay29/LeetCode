@@ -4,22 +4,28 @@ public:
         int n = height.size();
         int ans = 0;
         
-        vector<int> lMax(n, 0);
-        vector<int> rMax(n, 0);
-        lMax[0] = height[0];
-        rMax[n-1] = height[n-1];
-        
-        for(int i=1;i<n;i++)
+        int l = 0;
+        int r = n-1;
+        int lMax = height[0];
+        int rMax = height[n-1];
+        while(l < r)
         {
-            lMax[i] = max(height[i], lMax[i-1]);
-        }
-        for(int i=n-2;i>=0;i--)
-        {
-            rMax[i] = max(height[i], rMax[i+1]);
-        }
-        for(int i=1;i<n-1;i++)
-        {
-            ans += min(lMax[i], rMax[i]) - height[i];
+            if(height[l] < height[r])
+            {
+                if(height[l] > lMax)
+                    lMax = height[l];
+                else
+                    ans += (lMax - height[l]);
+                l++;
+            }
+            else
+            {
+                if(height[r] > rMax)
+                    rMax = height[r];
+                else
+                    ans += (rMax - height[r]);
+                r--;
+            }
         }
         return ans;
     }
