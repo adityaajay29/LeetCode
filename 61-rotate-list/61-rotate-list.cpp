@@ -10,6 +10,17 @@
  */
 class Solution {
 public:
+    void reverse(ListNode *curr, ListNode *prev, ListNode *next, int end)
+    {
+        for(int i=1;i<end;i++)
+        {
+            curr->next = next->next;
+            next->next = prev->next;
+            prev->next = next;
+            next = curr->next;
+        }
+    }
+    
     ListNode* rotateRight(ListNode* head, int k) {
         if(head == nullptr || head->next == nullptr)
             return head;
@@ -35,23 +46,13 @@ public:
         
         curr = prev->next;
         next = curr->next;
-        for(int i=1;i<sz-k;i++)
-        {
-            curr->next = next->next;
-            next->next = prev->next;
-            prev->next = next;
-            next = curr->next;
-        }
+        reverse(curr, prev, next, sz-k);
+        
         prev = curr;
         curr = prev->next;
         next = curr->next;
-        for(int i=1;i<k;i++)
-        {
-            curr->next = next->next;
-            next->next = prev->next;
-            prev->next = next;
-            next = curr->next;
-        }
+        reverse(curr, prev, next, k);
+        
         prev = nullptr;
         curr = dummy->next;
         while(curr)
