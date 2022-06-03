@@ -2,6 +2,12 @@ class Solution {
 public:
     void solve(vector<int>& c, vector<vector<int>> &ans, vector<int> temp, int target, int i)
     {
+        if(target == 0)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        
         if(i == c.size())
         {
             if(target == 0)
