@@ -23,6 +23,7 @@ static bool myComp(Item x, Item y)
     double val1 = (double)x.value;
     double wt2 = (double)y.weight;
     double val2 = (double)y.value;
+    
     return (val1/wt1 > val2/wt2);
 }
 
@@ -36,23 +37,23 @@ class Solution
         // Your code here
         sort(arr, arr + n, myComp);
         
-        double maxWt = 0;
+        double maxProfit = 0;
         double wt = W;
         for(int i=0;i<n;i++)
         {
             if(arr[i].weight <= wt)
             {
-                maxWt += arr[i].value;
+                maxProfit += arr[i].value;
                 wt -= arr[i].weight;
             }
             else 
             {
                 double part = ((double)arr[i].value/(double)arr[i].weight )* wt;
-                maxWt += part;
+                maxProfit += part;
                 wt -= wt;
             }
         }
-        return maxWt;
+        return maxProfit;
     }
         
 };
