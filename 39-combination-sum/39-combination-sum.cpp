@@ -9,13 +9,7 @@ public:
         }
         
         if(i == c.size())
-        {
-            if(target == 0)
-            {
-                ans.push_back(temp);
-            }
             return;
-        }
 
         if(c[i] <= target)
         {
