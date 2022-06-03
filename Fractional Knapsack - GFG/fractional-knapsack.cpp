@@ -38,19 +38,19 @@ class Solution
         sort(arr, arr + n, myComp);
         
         double maxProfit = 0;
-        double wt = W;
+        double wtLeft = W;
         for(int i=0;i<n;i++)
         {
-            if(arr[i].weight <= wt)
+            if(arr[i].weight <= wtLeft)
             {
                 maxProfit += arr[i].value;
-                wt -= arr[i].weight;
+                wtLeft -= arr[i].weight;
             }
             else 
             {
-                double part = ((double)arr[i].value/(double)arr[i].weight )* wt;
+                double part = ((double)arr[i].value/(double)arr[i].weight )* wtLeft;
                 maxProfit += part;
-                wt -= wt;
+                wtLeft -= wtLeft;
             }
         }
         return maxProfit;
