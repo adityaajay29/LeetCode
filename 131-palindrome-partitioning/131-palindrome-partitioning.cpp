@@ -24,7 +24,7 @@ public:
         {
             if(isPalindrome(s, i, j))
             {
-                temp.push_back(s.substr(i, j - i + 1));
+                temp.push_back(s.substr(i, j-i+1));
                 solve(s, ans, temp, j+1);
                 temp.pop_back();
             }
