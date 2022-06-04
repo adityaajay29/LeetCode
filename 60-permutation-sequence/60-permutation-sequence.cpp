@@ -14,7 +14,7 @@ public:
 //         making permutaions with 0 based indexing
         k -= 1;
         string kthPerm = "";
-    
+        
         while(true)
         {
             kthPerm += to_string(numbers[k / nMinusOneFact]);
