@@ -14,16 +14,17 @@ public:
 //         making permutaions with 0 based indexing
         k -= 1;
         string kthPerm = "";
-        
-        while(true)
+    
+        while(numbers.size() > 1)
         {
             kthPerm += to_string(numbers[k / nMinusOneFact]);
             numbers.erase(numbers.begin() + (k / nMinusOneFact));
-            if(numbers.size() == 0)
-                break;
+            // if(numbers.size() == 0)
+            //     break;
             k %= nMinusOneFact;
             nMinusOneFact /= numbers.size();
         }
+        kthPerm += to_string(numbers[0]);
         return kthPerm;
     }
 };
