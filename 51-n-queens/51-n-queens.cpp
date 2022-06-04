@@ -3,36 +3,36 @@ public:
     
     bool isValid(vector<string> board, int row, int col, int n)
     {
-        int tempRow = row;
-        int tempCol = col;
+        int i = row;
+        int j = col;
         
-        while(row >= 0 && col >= 0)
+        while(i >= 0 && j >= 0)
         {
-            if(board[row][col] == 'Q')
+            if(board[i][j] == 'Q')
                 return false;
-            row--;
-            col--;
+            i--;
+            j--;
         }
         
-        row = tempRow;
-        col = tempCol;
+        i = row;
+        j = col;
         
-        while(row < n && col >= 0)
+        while(i < n && j >= 0)
         {
-            if(board[row][col] == 'Q')
+            if(board[i][j] == 'Q')
                 return false;
-            row++;
-            col--;
+            i++;
+            j--;
         }
         
-        row = tempRow;
-        col = tempCol;
+        i = row;
+        j = col;
         
-        while(col >= 0)
+        while(j >= 0)
         {
-            if(board[row][col] == 'Q')
+            if(board[i][j] == 'Q')
                 return false;
-            col--;
+            j--;
         }
         
         return true;
