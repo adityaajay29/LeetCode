@@ -15,16 +15,15 @@ public:
         k -= 1;
         string kthPerm = "";
     
-        while(numbers.size() > 1)
+        while(true)
         {
             kthPerm += to_string(numbers[k / nMinusOneFact]);
             numbers.erase(numbers.begin() + (k / nMinusOneFact));
-            // if(numbers.size() == 0)
-            //     break;
+            if(numbers.size() == 0)
+                break;
             k %= nMinusOneFact;
             nMinusOneFact /= numbers.size();
         }
-        kthPerm += to_string(numbers[0]);
         return kthPerm;
     }
 };
