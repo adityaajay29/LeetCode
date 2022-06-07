@@ -11,6 +11,9 @@ using namespace std;
 class Solution{
     public:
     
+    vector<int> dx{1, 0, 0, -1};
+    vector<int> dy{0, 1, -1, 0};
+    
     bool isValid(int i, int j,int n, vector<vector<int>> &m, vector<vector<int>> &visited)
     {
         if(i < 0 || i >= n || j < 0 || j >= n)
@@ -32,33 +35,15 @@ class Solution{
             ans.push_back(temp);
             return;
         }
-        // down
-        if(isValid(i + 1, j, n, m, visited))
+        string paths = "DRLU";
+        for(int k =0;k<4;k++)
         {
-            visited[i][j] = 1;
-            solve(ans, m, visited, temp + 'D', n, i + 1, j);
-            visited[i][j] = 0;
-        }
-        // right
-        if(isValid(i, j + 1, n, m, visited))
-        {
-            visited[i][j] = 1;
-            solve(ans, m, visited, temp + 'R', n, i, j + 1);
-            visited[i][j] = 0;
-        }
-        // up
-        if(isValid(i - 1, j, n, m, visited))
-        {
-            visited[i][j] = 1;
-            solve(ans, m, visited, temp + 'U', n, i - 1, j);
-            visited[i][j] = 0;
-        }
-        // left
-        if(isValid(i, j - 1, n, m, visited))
-        {
-            visited[i][j] = 1;
-            solve(ans, m, visited, temp + 'L', n, i, j - 1);
-            visited[i][j] = 0;
+            if(isValid(i + dx[k], j + dy[k], n, m, visited))
+            {
+                visited[i][j] = 1;
+                solve(ans, m, visited, temp + paths[k], n, i + dx[k], j + dy[k]);
+                visited[i][j] = 0;
+            }
         }
     }
     
