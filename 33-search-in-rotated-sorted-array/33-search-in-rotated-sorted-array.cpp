@@ -10,19 +10,19 @@ public:
             if(nums[mid] == target)
                 return mid;
             
-            if(target < nums[mid])
+            if(nums[l] <= nums[mid])
             {
-                if(nums[l] > target && nums[l] <= nums[mid])
-                    l = mid + 1;
-                else 
+                if(target <= nums[mid] && target >= nums[l])
                     h = mid - 1;
+                else 
+                    l = mid + 1;
             }
-            else 
+            else
             {
-                if(nums[h] < target && nums[h] >= nums[mid])
-                    h = mid - 1;
-                else 
+                if(target >= nums[mid] && target <= nums[h])
                     l = mid + 1;
+                else
+                    h = mid - 1;
             }
         }
         return -1;
