@@ -8,21 +8,27 @@ class Solution{
     public:
     int kthElement(int arr1[], int arr2[], int n, int m, int k)
     {
-        vector<int> ans;
-        int i = 0;
-        int j = 0;
-        while(i < n && j < m)
+        if(m < n)
+        return kthElement(arr2, arr1, m, n, k);
+        int l = max(0, k - m);
+        int h = min(k, n);
+        while(l <= h)
         {
-            if(arr1[i] <= arr2[j])
-            ans.push_back(arr1[i++]);
+            int cut1 = l + (h - l)/2;
+            int cut2 = k - cut1;
+            int left1 = (cut1 == 0 ? INT_MIN : arr1[cut1 - 1]);
+            int left2 = (cut2 == 0 ? INT_MIN : arr2[cut2 - 1]);
+            int right1 = (cut1 == n ? INT_MAX : arr1[cut1]);
+            int right2 = (cut2 == m ? INT_MAX : arr2[cut2]);
+            if(left1 <= right2 && left2 <= right1)
+            return max(left1, left2);
+            
+            if(left1 > right2)
+                h = cut1 - 1;
             else
-            ans.push_back(arr2[j++]);
+                l = cut1 + 1;
         }
-        while(i < n)
-        ans.push_back(arr1[i++]);
-        while(j < m)
-        ans.push_back(arr2[j++]);
-        return ans[k - 1];
+        return -1;
     }
 };
 
