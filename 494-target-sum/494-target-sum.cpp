@@ -12,27 +12,29 @@ public:
         
         int sum = (totalSum - target)/2;
         
-        vector<vector<int>> dp(n, vector<int> (sum + 1));
+        vector<int> prev(sum + 1);
         
         if(nums[0] == 0)
-            dp[0][0] = 2;
+            prev[0] = 2;
         else
-            dp[0][0] = 1;
+            prev[0] = 1;
         
         if(nums[0] <= sum && nums[0] != 0)
-            dp[0][nums[0]] = 1;
+            prev[nums[0]] = 1;
         
         for(int i=1;i<n;i++)
         {
+            vector<int> curr(sum + 1);
             for(int j=0;j<=sum;j++)
             {
                 int take = 0;
-                int notTake = dp[i-1][j];
+                int notTake = prev[j];
                 if(nums[i] <= j)
-                    take = dp[i-1][j-nums[i]];
-                dp[i][j] = take + notTake;
+                    take = prev[j-nums[i]];
+                curr[j] = take + notTake;
             }
+            prev = curr;
         }
-        return dp[n-1][sum];
+        return prev[sum];
     }
 };
