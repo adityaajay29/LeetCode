@@ -11,18 +11,23 @@ public:
         if(target == 0)
             return n;
         
-        unordered_map<int, int> mp;
+        if(target < 0)
+            return -1;
+        
         int sum = 0;
-        mp[0] = -1;
         int ans = -1;
-        for(int i=0;i<n;i++)
+        
+        int l = 0;
+        int h = 0;
+        
+        while(l < n && h <= n)
         {
-            sum += nums[i];
-            if(mp.find(sum - target) != mp.end())
-            {
-                ans = max(ans, i - mp[sum - target]);
-            }
-            mp[sum] = i;
+            if(sum < target)
+                sum += nums[h++];
+            else
+                sum -= nums[l++];
+            if(sum == target)
+                ans = max(ans, h - l);
         }
         return (ans == -1 ? -1 : n - ans);
     }
