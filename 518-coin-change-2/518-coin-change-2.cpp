@@ -1,40 +1,26 @@
 class Solution {
 public:
-    
-    int dp[302][5002];
-    
-    int knapsack(vector<int> &coins, int n, int amount)
+    int solve(vector<int> &coins, int i, int val, vector<vector<int>> &dp)
     {
-        for(int i=0;i<=n;i++)
+        if(i == 0)
         {
-            for(int j=0;j<=amount;j++)
-            {
-                if(i == 0)
-                    dp[i][j] = 0;
-                if(j == 0)
-                    dp[i][j] = 1;
-            }
+            return (val % coins[0] == 0);
         }
-        for(int i=1;i<=n;i++)
-        {
-            for(int j=1;j<=amount;j++)
-            {
-                if(coins[i-1] <= j)
-                    dp[i][j] = dp[i][j-coins[i-1]] + dp[i-1][j];
-                else 
-                    dp[i][j] = dp[i-1][j];
-            }
-        }
-        return dp[n][amount];
+        
+        if(dp[i][val] != -1)
+            return dp[i][val];
+        
+        int take = 0;
+        int notTake = solve(coins, i - 1, val, dp);
+        if(coins[i] <= val)
+            take = solve(coins, i, val - coins[i], dp);
+        
+        return dp[i][val] = take + notTake;
     }
     
     int change(int amount, vector<int>& coins) {
-        int n=coins.size();
-        int val=0;
-        for(int x: coins)
-            val+=x;
-        // if(val < amount && n>1)
-        //     return 0;
-        return knapsack(coins, n, amount);
+        int n = coins.size();
+        vector<vector<int>> dp(n, vector<int> (amount + 1, -1));
+        return solve(coins, n - 1, amount, dp);
     }
 };
