@@ -29,7 +29,7 @@ public:
     int distributeCookies(vector<int>& cookies, int k) {
         sort(cookies.begin(), cookies.end());
         int n = cookies.size();
-        int l = cookies[n-1] - cookies[0];
+        int l = cookies[n-1];
         int h = 0;
         int ans = 0;
         for(int x : cookies)
