@@ -8,21 +8,21 @@ public:
     
     void push(int x) {
         q.push(x);
-        int sz=q.size();
-//         atleast 1 ele should be there
-        while(sz>1)
+        int sz = q.size();
+        while(sz > 1)
         {
-            int temp=q.front();
+            int front = q.front();
             q.pop();
-            q.push(temp);
+            q.push(front);
             sz--;
         }
     }
     
     int pop() {
-        int temp=q.front();
+        
+        int popped = q.front();
         q.pop();
-        return temp;
+        return popped;
     }
     
     int top() {
