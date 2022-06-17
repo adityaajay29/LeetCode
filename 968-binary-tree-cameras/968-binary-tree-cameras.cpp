@@ -12,9 +12,9 @@
 class Solution {
 public:
     
-    #define pleaseCover 0
-    #define hasCamera   1
-    #define isCovered   2
+    #define pleaseCover 1
+    #define hasCamera   2
+    #define isCovered   3
     
     int dfs(TreeNode *root, int &camera)
     {
