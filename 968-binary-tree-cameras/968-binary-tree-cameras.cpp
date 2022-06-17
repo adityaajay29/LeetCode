@@ -12,33 +12,33 @@
 class Solution {
 public:
     
-    #define noCamera    0
+    #define pleaseCover 0
     #define hasCamera   1
-    #define notNeeded   2
+    #define isCovered   2
     
     int dfs(TreeNode *root, int &camera)
     {
         if(root == nullptr)
-            return notNeeded;
+            return isCovered;
         
         int left = dfs(root->left, camera);
         int right = dfs(root->right, camera);
         
-        if(left == noCamera || right == noCamera)
+        if(left == pleaseCover || right == pleaseCover)
         {
             camera++;
             return hasCamera;
         }
         
         if(left == hasCamera || right == hasCamera)
-            return notNeeded;
+            return isCovered;
         
-        return noCamera;
+        return pleaseCover;
     }
     
     int minCameraCover(TreeNode* root) {
         int camera = 0;
-        if(dfs(root, camera) == noCamera)
+        if(dfs(root, camera) == pleaseCover)
             camera++;
         
         return camera;
