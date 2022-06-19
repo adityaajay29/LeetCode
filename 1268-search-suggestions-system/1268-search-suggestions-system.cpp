@@ -19,12 +19,8 @@ public:
             }
             if(temp.size() > 3)
                 temp.resize(3);
-            if(temp.size() == 0)
-            {
-                ans.push_back({});
-            }
-            else
-                ans.push_back(temp);
+            
+            temp.size() == 0 ? ans.push_back({}) : ans.push_back(temp);
         }
         return ans;
     }
