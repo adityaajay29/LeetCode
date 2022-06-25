@@ -22,6 +22,8 @@ public:
         while(!s.empty())
             s.pop();
         
+        int ans = 0;
+        
         for(int i=0;i<n;i++)
         {
             while(!s.empty() && h[s.top()] >= h[i])
@@ -33,15 +35,17 @@ public:
                 lLimit[i] = s.top() + 1;
             }
             s.push(i);
-        }
-        int i = 0;
-        int ans = 0;
-        while(i < n)
-        {
             int temp = h[i] * (rLimit[i] - lLimit[i] + 1);
             ans = max(ans, temp);
-            i++;
         }
+        // int i = 0;
+        // int ans = 0;
+        // while(i < n)
+        // {
+        //     int temp = h[i] * (rLimit[i] - lLimit[i] + 1);
+        //     ans = max(ans, temp);
+        //     i++;
+        // }
         return ans;
     }
 };
