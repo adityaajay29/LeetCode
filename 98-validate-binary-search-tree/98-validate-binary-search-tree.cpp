@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode *root,vector<int> &arr)
+    TreeNode *prev = nullptr;
+    
+    bool inorder(TreeNode *root)
     {
-        if(!root)
-            return;
-        dfs(root->left, arr);
-        arr.push_back(root->val);
-        dfs(root->right,arr);
+        if(root == nullptr)
+            return true;
+        
+        if(inorder(root->left) == false)
+            return false;
+        
+        if(prev != nullptr && prev->val >= root->val) 
+            return false;
+        
+        prev = root;
+        // cout<<prev->val<<endl;` 
+        
+        return inorder(root->right);
     }
     
     bool isValidBST(TreeNode* root) {
-        if(!root->left && !root->right)
-            return true;
-        
-        vector<int> arr;
-        dfs(root, arr);
-        for(int i=1;i<arr.size();i++)
-        {
-            if(arr[i] <= arr[i - 1])
-                return false;
-        }
-        return true;
+        return inorder(root);
     }
 };
