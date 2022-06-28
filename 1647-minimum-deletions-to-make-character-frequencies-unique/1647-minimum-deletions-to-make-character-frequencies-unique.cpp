@@ -13,22 +13,14 @@ public:
         {
             char c = x.first;
             int freq = x.second;
-            if(set.find(freq) == set.end())
+            while(set.find(freq) != set.end())
+            {
+                freq--;
+                del++;
+            }
+            if(freq != 0)
             {
                 set.insert(freq);
-            }
-            else
-            {
-                int temp = freq;
-                while(set.find(temp) != set.end())
-                {
-                    temp--;
-                    del++;
-                }
-                if(temp != 0)
-                {
-                    set.insert(temp);
-                }
             }
         }
         return del;
