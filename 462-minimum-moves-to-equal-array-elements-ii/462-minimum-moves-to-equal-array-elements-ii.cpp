@@ -5,7 +5,7 @@ public:
         if(n == 1)
             return 0;
         
-        sort(nums.begin(), nums.end());
+        nth_element(nums.begin(), nums.begin() + n / 2, nums.end());
         int mid = nums[n/2];
         int ans = 0;
         for(int x : nums)
