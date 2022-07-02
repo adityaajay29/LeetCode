@@ -7,32 +7,27 @@ public:
         sort(verticalCuts.begin(), verticalCuts.end());
         int m = horizontalCuts.size();
         int n = verticalCuts.size();
-        vector<int> hor;
-        vector<int> ver;
         
-        hor.push_back(horizontalCuts[0]);
-        ver.push_back(verticalCuts[0]);
-        
-        long long horMax = hor[0];
-        long long verMax = ver[0];
+        long long horMax = horizontalCuts[0];
+        long long verMax = verticalCuts[0];
         
         for(int i=1;i<m;i++)
         {
-            int cut = horizontalCuts[i] - horizontalCuts[i - 1];
-            hor.push_back(cut);
-            horMax = max(horMax, (long long)hor[i]);
+            long long cut = horizontalCuts[i] - horizontalCuts[i - 1];
+            horMax = max(horMax, cut);
         }
-        hor.push_back(h - horizontalCuts[m - 1]);
-        horMax = max(horMax, (long long)hor[m]);
+//         the size of last horizontal piece will be h - last cut index
+        long long lastHorPiece = h - horizontalCuts[m - 1];
+        horMax = max(horMax, lastHorPiece);
         
         for(int i=1;i<n;i++)
         {
-            int cut = verticalCuts[i] - verticalCuts[i - 1];
-            ver.push_back(cut);
-            verMax = max(verMax, (long long)ver[i]);
+            long long cut = verticalCuts[i] - verticalCuts[i - 1];
+            verMax = max(verMax, cut);
         }
-        ver.push_back(w - verticalCuts[n - 1]);
-        verMax = max(verMax, (long long)ver[n]);
+//         the size of last vertical piece will be w - last cut index
+        long long lastVerPiece = w - verticalCuts[n - 1];
+        verMax = max(verMax, lastVerPiece);
         
         long long cakeMax = (verMax * horMax);
         
