@@ -14,6 +14,7 @@ class Solution
     int celebrity(vector<vector<int> >& M, int n) 
     {
         // code here 
+        vector<int> list[n];
         vector<int> indegree(n, 0);
         vector<int> outdegree(n, 0);
         
@@ -21,9 +22,18 @@ class Solution
         {
             for(int j=0;j<n;j++)
             {
-                indegree[j] += M[i][j];
-                outdegree[i] += M[i][j];
+                if(M[i][j] == 1)
+                list[i].push_back(j);
             }
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int x : list[i])
+            {
+                indegree[x]++;
+            }
+            outdegree[i] += list[i].size();
         }
         
        for(int i=0;i<n;i++)
