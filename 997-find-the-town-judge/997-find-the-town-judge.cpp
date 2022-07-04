@@ -11,26 +11,18 @@ public:
             mat[a][b] = 1;
         }
         
-        stack<int> s;
-        for(int i=1;i<=n;i++)
+        int l = 1;
+        int h = n;
+        
+        while(l <= h)
         {
-            s.push(i);
+            if(mat[l][h] == 1)
+                l++;
+            else
+                h--;
         }
         
-        while(s.size() > 1)
-        {
-            int a = s.top();
-            s.pop();
-            int b = s.top();
-            s.pop();
-            
-            if(mat[a][b] == 1)
-                s.push(b);
-            else
-                s.push(a);
-        }
-        int candi = s.top();
-        s.pop();
+        int candi = l;
         
         for(int i=1;i<=n;i++)
         {
