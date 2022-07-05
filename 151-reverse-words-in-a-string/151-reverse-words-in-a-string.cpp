@@ -24,7 +24,7 @@ public:
             }
             i++;
         }
-        if(h > 0 && s[h - 1] == ' ')
+        while(h > 0 && s[h - 1] == ' ')
             h--;
         s.resize(h);
             return s;
