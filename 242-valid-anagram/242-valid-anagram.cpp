@@ -6,15 +6,18 @@ public:
         if(m != n)
             return false;
         
-        vector<int> asciiS(256);
-        vector<int> asciiT(256);
+        vector<int> ascii(256);
         
         for(char c : s)
-            asciiS[c]++;
+            ascii[c]++;
         
         for(char c : t)
-            asciiT[c]++;
+            ascii[c]--;
         
-        return (asciiS == asciiT);
+        for(int x : ascii)
+            if(x != 0)
+                return false;
+        
+        return true;
     }
 };
