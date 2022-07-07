@@ -8,11 +8,11 @@ public:
         
         vector<int> ascii(256);
         
-        for(char c : s)
-            ascii[c]++;
-        
-        for(char c : t)
-            ascii[c]--;
+        for(int i=0;i<m;i++)
+        {
+            ascii[s[i]]++;
+            ascii[t[i]]--;
+        }
         
         for(int x : ascii)
             if(x != 0)
