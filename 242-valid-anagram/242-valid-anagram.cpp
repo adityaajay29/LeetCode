@@ -6,12 +6,12 @@ public:
         if(m != n)
             return false;
         
-        vector<int> ascii(256);
+        vector<int> ascii(26);
         
         for(int i=0;i<m;i++)
         {
-            ascii[s[i]]++;
-            ascii[t[i]]--;
+            ascii[s[i] - 'a']++;
+            ascii[t[i] - 'a']--;
         }
         
         for(int x : ascii)
