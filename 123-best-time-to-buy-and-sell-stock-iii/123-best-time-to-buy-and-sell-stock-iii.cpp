@@ -1,31 +1,28 @@
 class Solution {
 public:
-    int solve(vector<int> &prices, int i, bool buy, int cap, vector<vector<vector<int>>> &dp)
-    {
-        if(cap == 0)
-            return 0;
-        
-        if(i == prices.size())
-            return 0;
-        
-        if(dp[i][buy][cap] != -1)
-            return dp[i][buy][cap];
-        
-        if(buy)
-        {
-            return dp[i][buy][cap] = max(-prices[i] + solve(prices, i + 1, false, cap, dp), 
-                                         0 + solve(prices, i + 1, true, cap, dp));
-        }
-        // else
-            return dp[i][buy][cap] =  max(prices[i] + solve(prices, i + 1, true, cap - 1, dp), 
-                                          0 + solve(prices, i + 1, false, cap, dp));
-    }
-    
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        bool buy = true;
-        int cap = 2;
-        vector<vector<vector<int>>> dp(n, vector<vector<int>> (2, vector<int> (cap + 1, -1)));
-        return solve(prices, 0, buy, cap, dp);
+        vector<vector<vector<int>>> dp(n + 1, vector<vector<int>> (2, vector<int> (3, 0)));
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int buy=0;buy<=1;buy++)
+            {
+                for(int cap=1;cap<=2;cap++)
+                {
+                    if(buy == 1)
+                    {
+                        dp[i][buy][cap] = max(-prices[i] + dp[i + 1][0][cap], 
+                                                0 + dp[i + 1][1][cap]);
+                    }
+                    else
+                    {
+                        dp[i][buy][cap] = max(prices[i] + dp[i + 1][1][cap-1],
+                                                0 + dp[i + 1][0][cap]);
+                    }
+                }
+            }
+        }
+        return dp[0][1][2];
     }
 };
