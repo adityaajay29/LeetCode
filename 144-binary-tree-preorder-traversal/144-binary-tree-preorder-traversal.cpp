@@ -11,19 +11,40 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode *root, vector<int> &ans)
-    {
-        if(root == nullptr)
-            return;
-        
-        ans.push_back(root->val);
-        dfs(root->left, ans);
-        dfs(root->right, ans);
-    }
-    
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> ans;
-        dfs(root, ans);
-        return ans;
+        vector<int> preorder;
+        TreeNode *curr = root;
+        while(curr != nullptr)
+        {
+//             if no left
+            if(curr->left == nullptr)
+            {
+                preorder.push_back(curr->val);
+                curr = curr->right;
+            }
+//             if left, goto left, goto its rightmost node
+            else
+            {
+                TreeNode *prev = curr->left;
+                while(prev->right != nullptr && prev->right != curr)
+                {
+                    prev = prev->right;
+                }
+//                 if there was no thread, then print the root and connect thread
+                if(prev->right == nullptr)
+                {
+                    preorder.push_back(curr->val);
+                    prev->right = curr;
+                    curr = curr->left;
+                }
+//                 break the thread
+                else
+                {
+                    prev->right = nullptr;
+                    curr = curr->right;
+                }
+            }
+        }
+        return preorder;
     }
 };
