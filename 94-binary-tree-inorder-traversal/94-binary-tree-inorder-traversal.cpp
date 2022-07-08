@@ -16,8 +16,10 @@ public:
         TreeNode *curr = root;
         while(curr != nullptr)
         {
+//             if left child doesn't exist
             if(curr->left == nullptr)
             {
+//                 print the root and goto right
                 inorder.push_back(curr->val);
                 curr = curr->right;
             }
@@ -28,11 +30,13 @@ public:
                 {
                     prev = prev->right;
                 }
+//                 if there was no thread
                 if(prev->right == nullptr)
                 {
                     prev->right = curr;
                     curr = curr->left;
                 }
+//                 if thread was present
                 else
                 {
                     prev->right = nullptr;
