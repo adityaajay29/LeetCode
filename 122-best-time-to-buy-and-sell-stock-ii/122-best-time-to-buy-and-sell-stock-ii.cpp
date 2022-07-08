@@ -5,16 +5,11 @@ public:
         int cost = prices[0];
         for(int i=1;i<prices.size();i++)
         {
-            if(prices[i] <= cost)
-            {
-                cost = prices[i];
-                continue;
-            }
-            else
+            if(prices[i] > cost)
             {
                 profit += (prices[i] - cost);
-                cost = prices[i];
             }
+            cost = prices[i];
         }
         return profit;
     }
