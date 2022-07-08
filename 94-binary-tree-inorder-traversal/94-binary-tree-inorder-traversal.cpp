@@ -11,19 +11,19 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode *root, vector<int> &arr)
+    void dfs(TreeNode *root, vector<int> &ans)
     {
         if(root == nullptr)
             return;
         
-        dfs(root->left, arr);
-        arr.push_back(root->val);
-        dfs(root->right, arr);
+        dfs(root->left, ans);
+        ans.push_back(root->val);
+        dfs(root->right, ans);
     }
     
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> arr;
-        dfs(root, arr);
-        return arr;
+        vector<int> ans;
+        dfs(root, ans);
+        return ans;
     }
 };
