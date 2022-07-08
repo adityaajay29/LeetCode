@@ -11,17 +11,14 @@ public:
         if(dp[i][buy][cap] != -1)
             return dp[i][buy][cap];
         
-        int profit = 0;
         if(buy)
         {
             return dp[i][buy][cap] = max(-prices[i] + solve(prices, i + 1, false, cap, dp), 
                                          0 + solve(prices, i + 1, true, cap, dp));
         }
-        else
+        // else
             return dp[i][buy][cap] =  max(prices[i] + solve(prices, i + 1, true, cap - 1, dp), 
                                           0 + solve(prices, i + 1, false, cap, dp));
-        
-        return dp[i][buy][cap] = profit;
     }
     
     int maxProfit(vector<int>& prices) {
