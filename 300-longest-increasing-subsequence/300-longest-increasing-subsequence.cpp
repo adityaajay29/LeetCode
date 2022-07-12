@@ -1,36 +1,25 @@
 class Solution {
 public:
-    int dp[2501][2501];
+    int solve(vector<int> &nums, int i, int prevInd, vector<vector<int>> &dp)
+    {
+        if(i == nums.size())
+            return 0;
+        
+//         storing at -1 as index is not possible, so shifting prev by 1
+        if(dp[i][prevInd + 1] != -1)
+            return dp[i][prevInd + 1];
+        
+        int notTake = 0 + solve(nums, i + 1, prevInd, dp);
+        int take = 0;
+        if(prevInd == -1 || nums[i] > nums[prevInd])
+            take = 1 + solve(nums, i + 1, i, dp);
+        
+        return dp[i][prevInd + 1] = max(take, notTake);
+    }
     
     int lengthOfLIS(vector<int>& nums) {
-        int n=nums.size();
-        set<int> s;
-        for(auto x: nums)
-            s.insert(x);
-        vector<int> nums2{s.begin(), s.end()};
-        int m = nums2.size();
-        for(int i=0;i<=n;i++)
-        {
-            for(int j=0;j<=m;j++)
-            {
-                if(i == 0 || j == 0)
-                    dp[i][j] = 0;
-            }
-        }
-        for(int i=1;i<=n;i++)
-        {
-            for(int j=1;j<=m;j++)
-            {
-                if(nums[i-1] == nums2[j-1])
-                {
-                    dp[i][j] = 1 + dp[i-1][j-1];
-                }
-                else
-                {
-                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-                }
-            }
-        }
-        return dp[n][m];
+        int n = nums.size();
+        vector<vector<int>> dp(n, vector<int> (n + 1, -1));
+        return solve(nums, 0, -1, dp);
     }
 };
