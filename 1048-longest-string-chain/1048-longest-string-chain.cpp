@@ -1,27 +1,45 @@
 class Solution {
-   public:
-    static bool myComp(string &a, string &b)
+public:
+    static bool myComp(string &s1, string &s2)
     {
-        return a.size() < b.size();
+        return s1.size() < s2.size();
     }
     
-    int longestStrChain(vector<string> &words) {
-        unordered_map<string, int> dp;
-        int ans = 1;
-        sort(words.begin(), words.end(), myComp);
-        for (string &word : words) 
+    bool isValid(string &s1, string &s2)
+    {
+        if(s1.size() - s2.size() != 1)
+            return false;
+        
+        int i=0;
+        int j=0;
+        while(i < s1.size())
         {
-            dp[word] = 1;
-            for (int i = 0; i < word.size(); i++)
+            if(j < s2.size() && s1[i] == s2[j])
             {
-                string prev = word.substr(0, i) + word.substr(i + 1);
-                if (dp.find(prev) != dp.end()) 
+                i++;
+                j++;
+            }
+            else i++;
+        }
+        return (i == s1.size() && j == s2.size());
+    }
+    
+    int longestStrChain(vector<string>& words) {
+        int n = words.size();
+        sort(words.begin(), words.end(), myComp);
+        vector<int> dp(n, 1);
+        int maxi = 1;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(isValid(words[i], words[j]))
                 {
-                    dp[word] = max(dp[word], dp[prev] + 1);
-                    ans = max(ans, dp[word]);
+                    dp[i] = max(dp[i], 1 + dp[j]);
                 }
             }
+            maxi = max(maxi, dp[i]);
         }
-        return ans;
+        return maxi;
     }
 };
