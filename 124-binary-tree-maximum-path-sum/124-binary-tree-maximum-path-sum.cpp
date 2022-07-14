@@ -15,10 +15,11 @@ public:
     {
         if(root == nullptr)
             return 0;
-        int lh = solve(root->left, res);
-        int rh = solve(root->right, res);
-        int temp = max(root->val + max(lh, rh), root->val);
-        int ans = max(temp, lh + rh + root->val);
+        
+        int left = solve(root->left, res);
+        int right = solve(root->right, res);
+        int temp = max(root->val, root->val + max(left, right));
+        int ans = max(temp, left + right + root->val);
         res = max(res, ans);
         return temp;
     }
