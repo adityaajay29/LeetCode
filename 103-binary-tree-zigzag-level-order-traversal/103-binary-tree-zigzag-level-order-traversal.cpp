@@ -22,20 +22,19 @@ public:
         while(!q.empty())
         {
             int sz = q.size();
-            int lvl = q.front().second;
-            vector<int> temp;
-            while(sz--)
+            vector<int> temp(sz);
+            for(int i=0;i<sz;i++)
             {
                 TreeNode *curr = q.front().first;
+                int lvl = q.front().second;
                 q.pop();
                 if(curr->left)
                     q.push({curr->left, lvl + 1});
                 if(curr->right)
                     q.push({curr->right,lvl + 1});
-                temp.push_back(curr->val);
+                int index = ((lvl % 2) == 0 ? i : sz - 1 - i);
+                temp[index] = curr->val;
             }
-            if(lvl % 2)
-                reverse(temp.begin(), temp.end());
             ans.push_back(temp);
         }
         return ans;
