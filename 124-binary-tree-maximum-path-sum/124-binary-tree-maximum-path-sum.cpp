@@ -16,11 +16,10 @@ public:
         if(root == nullptr)
             return 0;
         
-        int left = solve(root->left, res);
-        int right = solve(root->right, res);
-        int temp = max(root->val, root->val + max(left, right));
-        res = max(res, max(temp, root->val + left + right));
-        return temp;
+        int left = max(0, solve(root->left, res));
+        int right = max(0, solve(root->right, res));
+        res = max(res, root->val + left + right);
+        return root->val + max(left, right);
     }
     
     int maxPathSum(TreeNode* root) {
