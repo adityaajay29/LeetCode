@@ -19,8 +19,7 @@ public:
         int left = solve(root->left, res);
         int right = solve(root->right, res);
         int temp = max(root->val, root->val + max(left, right));
-        int ans = max(temp, left + right + root->val);
-        res = max(res, ans);
+        res = max(res, max(temp, root->val + left + right));
         return temp;
     }
     
