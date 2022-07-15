@@ -11,17 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode *mirrorTree(TreeNode *root)
-    {
-        if(root == nullptr)
-            return nullptr;
-        TreeNode *newRoot = new TreeNode(root->val);
-        newRoot->left = mirrorTree(root->right);
-        newRoot->right = mirrorTree(root->left);
-        return newRoot;
-    }
-    
-    bool isSame(TreeNode *p, TreeNode *q)
+    bool solve(TreeNode *p, TreeNode *q)
     {
         if(p == nullptr || q == nullptr)
             return p == q;
@@ -29,14 +19,13 @@ public:
         if(p->val != q->val)
             return false;
         
-        if(isSame(p->left, q->left) == false)
+        if(solve(p->left, q->right) == false)
             return false;
         
-        return isSame(p->right, q->right);
+        return solve(p->right, q->left);
     }
     
     bool isSymmetric(TreeNode* root) {
-        TreeNode *mirror = mirrorTree(root);
-        return isSame(root, mirror);
+        return solve(root->left, root->right);
     }
 };
