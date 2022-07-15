@@ -1,43 +1,53 @@
 class Solution {
 public:
-    int visited[51][51];
-    vector<int>dx{-1,0,0,1};
-    vector<int>dy{0,1,-1,0};
+    vector<int> dx{1, -1, 0, 0};
+    vector<int> dy{0, 0, 1, -1};
     
-    bool isValid(vector<vector<int>>& grid,int x,int y,int m,int n)
+    bool isValid(vector<vector<int>>& grid, vector<vector<int>> &visited, int m, int n, int i, int j)
     {
-        if(x<0 || x>=m || y<0 || y>=n)
+        if(i < 0 || i >= m || j < 0 || j >= n)
             return false;
-        if(visited[x][y] || grid[x][y]==0)
+        
+        if(visited[i][j])
             return false;
+        
+        if(grid[i][j] == 0)
+            return false;
+        
         return true;
     }
     
-    void area(vector<vector<int>>& grid,int x,int y,int m,int n,int &count)
+    void dfs(vector<vector<int>> &grid, vector<vector<int>> &visited, int m, int n, int i, int j, int &count)
     {
-        visited[x][y]=1;
+        visited[i][j] = 1;
         count++;
-        for(int i=0;i<4;i++)
+        for(int k=0;k<4;k++)
         {
-            if(isValid(grid,x+dx[i],y+dy[i],m,n))
-                area(grid,x+dx[i],y+dy[i],m,n,count);
+            if(isValid(grid, visited, m, n, i + dx[k], j + dy[k]))
+            {
+                dfs(grid, visited, m, n, i + dx[k], j + dy[k], count);
+            }
         }
     }
     
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-        int m=grid.size();
-        int n=grid[0].size();
-        int ans=0;
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> visited(m, vector<int> (n, 0));
+        int maxArea = 0;
+        
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
-                int count=0;
-                if(!visited[i][j] && grid[i][j]==1)
-                    area(grid,i,j,m,n,count);
-                ans=max(ans,count);
+                int count = 0;
+                if(isValid(grid, visited, m, n, i, j))
+                {
+                    dfs(grid,visited, m, n, i, j, count);
+                    maxArea = max(maxArea, count);
+                }
             }
         }
-        return ans;
+        return maxArea;
     }
 };
