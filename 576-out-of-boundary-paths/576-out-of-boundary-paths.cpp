@@ -2,18 +2,13 @@ class Solution {
 public:
     int modulo = 1e9 + 7;
     
-    bool isOut(int m, int n, int i, int j)
-    {
-        return (i < 0 || i >= m || j < 0 || j >= n);
-    }
-    
     int solve(int m, int n, int i, int j, int moves, vector<vector<vector<int>>> &dp)
     {
-        if(moves == 0 && !isOut(m, n, i, j))
-            return 0;
-        
-        if(isOut(m, n, i, j))
+        if(i < 0 || i >= m || j < 0 || j >= n)
             return 1;
+        
+        if(moves == 0)
+            return 0;
         
         if(dp[i][j][moves] != -1)
             return dp[i][j][moves];
