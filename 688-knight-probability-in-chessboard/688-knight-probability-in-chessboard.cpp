@@ -1,5 +1,8 @@
 class Solution {
 public:
+    vector<int> dx{-1, -2, -2, -1, 1, 2, 2, 1};
+    vector<int> dy{-2, -1, 1, 2, 2, 1, -1, -2};
+    
     double solve(int n, int k, int i, int j, vector<vector<vector<double>>> &dp)
     {
         if(i < 0 || i >= n || j < 0 || j >= n)
@@ -11,16 +14,16 @@ public:
         if(dp[k][i][j] != -1.0)
             return dp[k][i][j];
         
-        double a = solve(n, k - 1, i - 1, j - 2, dp);
-        double b = solve(n, k - 1, i - 2, j - 1, dp);
-        double c = solve(n, k - 1, i - 2, j + 1, dp);
-        double d = solve(n, k - 1, i - 1, j + 2, dp);
-        double e = solve(n, k - 1, i + 1, j + 2, dp);
-        double f = solve(n, k - 1, i + 2, j + 1, dp);
-        double g = solve(n, k - 1, i + 2, j - 1, dp);
-        double h = solve(n, k - 1, i + 1, j - 2, dp);
+        double move = 0;
         
-        return dp[k][i][j] = (a + b + c + d + e + f + g + h) / 8;
+        for(int it=0;it<8;it++)
+        {
+            int x = i + dx[it];
+            int y = j + dy[it];
+            
+            move += solve(n, k - 1, x, y, dp);
+        }
+        return dp[k][i][j] = move / 8;
     }
     
     double knightProbability(int n, int k, int row, int column) {
