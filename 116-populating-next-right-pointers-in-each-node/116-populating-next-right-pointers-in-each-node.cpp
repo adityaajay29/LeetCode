@@ -22,28 +22,15 @@ public:
         if(root == nullptr)
             return nullptr;
         
-        queue<pair<Node *, int>> q;
-        q.push({root, 0});
-        while(!q.empty())
+        if(root->left)
         {
-            int sz = q.size();
-            while(sz--)
+            root->left->next = root->right;
+            if(root->next)
             {
-                Node *curr = q.front().first;
-                int lvl = q.front().second;
-                q.pop();
-                if(!q.empty())
-                {
-                    if(q.front().second == lvl)
-                    {
-                        curr->next = q.front().first;
-                    }
-                }
-                if(curr->left)
-                    q.push({curr->left, lvl + 1});
-                if(curr->right)
-                    q.push({curr->right, lvl + 1});
+                root->right->next = root->next->left;
             }
+            connect(root->left);
+            connect(root->right);
         }
         return root;
     }
