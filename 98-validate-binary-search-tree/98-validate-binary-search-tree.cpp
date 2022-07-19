@@ -11,26 +11,22 @@
  */
 class Solution {
 public:
-    TreeNode *prev = nullptr;
-    
-    bool inorder(TreeNode *root)
+    bool solve(TreeNode *root, long mini, long maxi)
     {
         if(root == nullptr)
             return true;
         
-        if(inorder(root->left) == false)
+        if(root->val <= mini || root->val >= maxi)
             return false;
         
-        if(prev != nullptr && prev->val >= root->val) 
+        if(solve(root->left, mini, root->val) == false)
             return false;
         
-        prev = root;
-        // cout<<prev->val<<endl;` 
+        return solve(root->right, root->val, maxi);
         
-        return inorder(root->right);
     }
     
     bool isValidBST(TreeNode* root) {
-        return inorder(root);
+        return solve(root, LONG_MIN, LONG_MAX);
     }
 };
