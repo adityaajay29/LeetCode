@@ -11,32 +11,20 @@
  */
 class Solution {
 public:
-    TreeNode *solve(vector<int> &in, vector<int> &pre, int inStart, int inEnd, int preStart, int preEnd, unordered_map<int, int> &mp)
+    TreeNode *solve(vector<int> &pre, int &i, int bound)
     {
-        if(inStart > inEnd || preStart > preEnd)
+        if(i == pre.size() || pre[i] > bound)
             return nullptr;
         
-        TreeNode *root = new TreeNode(pre[preStart]);
-        
-        int part = mp[root->val];
-        int newSize = part - inStart;
-        
-        root->left = solve(in, pre, inStart, part - 1, preStart + 1, preStart + newSize, mp);
-        root->right = solve(in, pre, part + 1, inEnd, preStart + newSize + 1, preEnd, mp);
+        TreeNode *root = new TreeNode(pre[i++]);
+        root->left = solve(pre, i, root->val);
+        root->right = solve(pre, i, bound);
         
         return root;
     }
     
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        vector<int> inorder = preorder;
-        sort(inorder.begin(), inorder.end());
-        int n = inorder.size();
-        unordered_map<int, int> mp;
-        for(int i=0;i<n;i++)
-        {
-            mp[inorder[i]] = i;
-        }
-        
-        return solve(inorder, preorder, 0, n - 1, 0, n - 1, mp);
+        int  i = 0;
+        return solve(preorder, i, INT_MAX);
     }
 };
