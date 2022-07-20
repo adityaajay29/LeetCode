@@ -10,18 +10,18 @@ public:
         int count = 0;
         for(string &word : words)
         {
-            int x = -1;
+            int i = -1;
             bool found = true;
             for(char c : word)
             {
-                auto it = upper_bound(list[c - 'a'].begin(), list[c - 'a'].end(), x);
+                auto it = upper_bound(list[c - 'a'].begin(), list[c - 'a'].end(), i);
                 if(it == list[c - 'a'].end())
                 {
                     found = false;
                     break;
                 }
                 else 
-                    x = *it;
+                    i = *it;
             }
             if(found)
                 count++;
