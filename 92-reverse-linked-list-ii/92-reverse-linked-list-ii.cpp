@@ -16,34 +16,24 @@ public:
         
         ListNode *dummy = new ListNode(0);
         dummy->next = head;
-        ListNode *slow, *fast;
-        slow = fast = dummy;
-        int i = 1;
-        while(fast && i <= (right - left))
+        ListNode *prev = nullptr, *curr = dummy;
+        int i = 0;
+        while(i < left)
         {
-            fast = fast->next;
-            i++;
-        }
-        i = 1;
-        while(fast && i < left)
-        {
-            slow = slow->next;
-            fast = fast->next;
-            i++;
-        }
-        ListNode *prev = nullptr;
-        ListNode *curr = slow->next;
-        i = 0;
-        while(i <= (right - left))
-        {
-            ListNode *next = curr->next;
-            curr->next = prev;
             prev = curr;
-            curr = next;
+            curr = curr->next;
             i++;
         }
-        slow->next->next = curr;
-        slow->next = prev;
+        int rev = (right - left);
+        ListNode *next = curr->next;
+        while(rev > 0)
+        {
+            curr->next = next->next;
+            next->next = prev->next;
+            prev->next = next;
+            next = curr->next;
+            rev--;
+        }
         return dummy->next;
     }
 };
