@@ -18,10 +18,12 @@ public:
         
         int target = k - root->val;
         if(s.find(target) != s.end())
-        return true;
-        s.insert(root->val);
-        if(solve(root->left, k, s) == true)
             return true;
+        
+        s.insert(root->val);
+        if(solve(root->left, k, s))
+            return true;
+            
         return solve(root->right, k, s);
     }
     
