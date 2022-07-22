@@ -11,24 +11,31 @@
  */
 class Solution {
 public:
-    bool solve(TreeNode *root, int k, unordered_set<int> &s)
+    void solve(TreeNode*root, vector<int> &in)
     {
         if(root == nullptr)
-            return false;
-        
-        int target = k - root->val;
-        if(s.find(target) != s.end())
-            return true;
-        
-        s.insert(root->val);
-        if(solve(root->left, k, s))
-            return true;
-            
-        return solve(root->right, k, s);
+            return;
+        solve(root->left, in);
+        in.push_back(root->val);
+        solve(root->right, in);
     }
     
     bool findTarget(TreeNode* root, int k) {
-        unordered_set<int> s;
-        return solve(root, k, s);
+        vector<int> in;
+        solve(root, in);
+        int l = 0;
+        int h = in.size() - 1;
+        while(l < h)
+        {
+            int sum = in[l] + in[h];
+            if(sum == k)
+                return true;
+            
+            if(sum > k)
+                h--;
+            else
+                l++;
+        }
+        return false;
     }
 };
