@@ -13,14 +13,13 @@ public:
         if(root == nullptr || root == p || root == q)
             return root;
         
-        TreeNode *first = lowestCommonAncestor(root->left, p, q);
-        TreeNode *second = lowestCommonAncestor(root->right, p, q);
+        TreeNode *left = lowestCommonAncestor(root->left, p, q);
+        TreeNode *right = lowestCommonAncestor(root->right, p, q);
+        if(left == nullptr)
+            return right;
         
-        if(first == nullptr)
-            return second;
-        
-        if(second == nullptr)
-            return first;
+        if(right == nullptr)
+            return left;
         
         return root;
     }
