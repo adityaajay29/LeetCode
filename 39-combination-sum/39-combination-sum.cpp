@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void solve(vector<int>& c, vector<vector<int>> &ans, vector<int> temp, int target, int i)
+    void solve(vector<int> &candi, vector<vector<int>> &ans, vector<int> temp, int target, int i)
     {
         if(target == 0)
         {
@@ -8,16 +8,16 @@ public:
             return;
         }
         
-        if(i == c.size())
+        if(i == candi.size())
             return;
-
-        if(c[i] <= target)
+        
+        if(candi[i] <= target)
         {
-            temp.push_back(c[i]);
-            solve(c, ans, temp, target - c[i], i);
+            temp.push_back(candi[i]);
+            solve(candi, ans, temp, target - candi[i], i);
             temp.pop_back();
         }
-        solve(c, ans, temp, target, i+1);
+        solve(candi, ans, temp, target, i + 1);
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
