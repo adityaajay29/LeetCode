@@ -1,25 +1,23 @@
 class Solution {
 public:
-    bool isMatch(char a, char b)
+    bool isValid(char a, char b)
     {
-        return (a == '(' && b == ')' || a == '{' && b == '}' || a == '[' && b == ']');
+        return (a == '(' && b == ')' || a == '[' && b == ']' || a == '{' && b == '}');
     }
     
     bool isValid(string s) {
         stack<char> stack;
-        
-        for(char x : s)
+        for(char c : s)
         {
-            if(x == '(' || x == '{' || x == '[')
-            {
-                stack.push(x);
-            }
+            if(c == '(' || c == '{' || c == '[')
+                stack.push(c);
+            
             else
             {
                 if(stack.empty())
                     return false;
                 
-                if(isMatch(stack.top(), x))
+                if(isValid(stack.top(), c))
                 {
                     stack.pop();
                 }
@@ -27,6 +25,6 @@ public:
                     return false;
             }
         }
-        return (stack.empty());
+        return stack.empty();
     }
 };
