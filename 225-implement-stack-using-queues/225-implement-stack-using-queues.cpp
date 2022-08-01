@@ -1,7 +1,6 @@
 class MyStack {
 public:
     queue<int> q;
-    
     MyStack() {
         
     }
@@ -19,10 +18,9 @@ public:
     }
     
     int pop() {
-        
-        int popped = q.front();
+        int front = q.front();
         q.pop();
-        return popped;
+        return front;
     }
     
     int top() {
