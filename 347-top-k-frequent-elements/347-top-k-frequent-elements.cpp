@@ -3,21 +3,21 @@ public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         unordered_map<int, int> mp;
         for(int x : nums)
+        {
             mp[x]++;
-        vector<vector<int>> bucket(nums.size() + 1);
-        for(pair<int, int> x : mp)
-        {
-            bucket[x.second].push_back(x.first);
         }
-        vector<int> ans;
-        for(int i = bucket.size() - 1;i >= 0;i--)
+        priority_queue<pair<int, int>> pq;
+        for(auto x : mp)
         {
-            for(int x : bucket[i])
-            {
-                ans.push_back(x);
-            }
-            if(ans.size() == k)
-                break;
+            pq.push({x.second, x.first});
+        }
+        int i = 0;
+        vector<int> ans;
+        while(i < k)
+        {
+            ans.push_back(pq.top().second);
+            pq.pop();
+            i++;
         }
         return ans;
     }
