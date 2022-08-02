@@ -1,30 +1,29 @@
 class Solution {
 public:
+    int solve(vector<int>& prices, int i, int k, bool buy, vector<vector<vector<int>>> &dp)
+    {
+        if(k == 0)
+            return 0;
+        
+        if(i == prices.size())
+            return 0;
+        
+        if(dp[i][buy][k] != -1)
+            return dp[i][buy][k];
+        
+        if(buy)
+        {
+            return dp[i][buy][k] = max(-prices[i] + solve(prices, i + 1, k, false, dp), 
+                                      solve(prices, i + 1, k, true, dp));
+        }
+        return dp[i][buy][k] = max(prices[i] + solve(prices, i + 1, k - 1, true, dp),
+                                    solve(prices, i + 1, k, false, dp));
+    }
+    
     int maxProfit(int k, vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> next(2, vector<int> (k + 1, 0));
-        vector<vector<int>> curr(2, vector<int> (k + 1, 0));
-        
-        for(int i=n-1;i>=0;i--)
-        {
-            for(int buy=0;buy<=1;buy++)
-            {
-                for(int cap = 1;cap <= k;cap++)
-                {
-                    if(buy == 1)
-                    {
-                        curr[buy][cap] = max(-prices[i] + next[0][cap], 
-                                                0 + next[1][cap]);
-                    }
-                    else
-                    {
-                        curr[buy][cap] = max(prices[i] + next[1][cap - 1],
-                                                0 + next[0][cap]);
-                    }
-                }
-            }
-            next = curr;
-        }
-        return next[1][k];
+        vector<vector<vector<int>>> dp(n, vector<vector<int>> (2, vector<int> (k + 1, -1)));
+        bool buy = true;
+        return solve(prices, 0, k, buy, dp);
     }
 };
