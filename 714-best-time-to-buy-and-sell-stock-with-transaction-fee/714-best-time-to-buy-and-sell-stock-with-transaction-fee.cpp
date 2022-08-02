@@ -9,10 +9,10 @@ public:
             return dp[i][buy];
         
         if(buy)
-            return dp[i][buy] = max(-prices[i] + solve(prices, fees, i + 1, false, dp),
+            return dp[i][buy] = max(-prices[i] - fees + solve(prices, fees, i + 1, false, dp),
                                    solve(prices, fees, i + 1, true, dp));
         
-        return dp[i][buy] = max(prices[i] - fees + solve(prices, fees, i + 1, true, dp),
+        return dp[i][buy] = max(prices[i] + solve(prices, fees, i + 1, true, dp),
                                solve(prices, fees, i + 1, false, dp));
     }
     
