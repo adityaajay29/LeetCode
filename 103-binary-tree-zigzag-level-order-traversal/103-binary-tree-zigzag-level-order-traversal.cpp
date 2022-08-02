@@ -18,7 +18,6 @@ public:
         vector<vector<int>> ans;
         queue<pair<TreeNode *, int>> q;
         q.push({root, 0});
-        
         while(!q.empty())
         {
             int sz = q.size();
@@ -31,8 +30,8 @@ public:
                 if(curr->left)
                     q.push({curr->left, lvl + 1});
                 if(curr->right)
-                    q.push({curr->right,lvl + 1});
-                int index = ((lvl % 2) == 0 ? i : sz - 1 - i);
+                    q.push({curr->right, lvl + 1});
+                int index = (lvl % 2 == 0 ? i : sz - 1 - i);
                 temp[index] = curr->val;
             }
             ans.push_back(temp);
