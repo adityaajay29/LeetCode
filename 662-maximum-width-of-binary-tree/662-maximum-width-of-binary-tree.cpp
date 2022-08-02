@@ -15,32 +15,31 @@ public:
         if(root == nullptr)
             return 0;
         
-        int width = 0;
         queue<pair<TreeNode *, long>> q;
         q.push({root, 0});
+        int ans = 0;
         while(!q.empty())
         {
             int sz = q.size();
-            int minIndex = q.front().second;
-            long left, right;
-            int tempWidth;
+            int minLvl = q.front().second;
+            int left = 0, right = 0;
             for(int i=0;i<sz;i++)
             {
                 TreeNode *curr = q.front().first;
-                long lvl = q.front().second - minIndex;
+                int lvl = q.front().second;
                 q.pop();
+                int currLvl = lvl - minLvl;
                 if(curr->left)
-                    q.push({curr->left, 2 * lvl + 1});
+                    q.push({curr->left, (long)2 * currLvl + 1});
                 if(curr->right)
-                    q.push({curr->right, 2 * lvl + 2});
+                    q.push({curr->right, (long)2 * currLvl + 2});
                 if(i == 0)
-                    left = lvl;
+                    left = currLvl;
                 if(i == sz - 1)
-                    right = lvl;
-                tempWidth = (right - left) + 1;
+                    right = currLvl;
             }
-            width = max(width, tempWidth);
+            ans = max(ans, right - left + 1);
         }
-        return width;
+        return ans;
     }
 };
