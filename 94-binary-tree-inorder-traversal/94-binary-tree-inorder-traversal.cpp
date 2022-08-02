@@ -12,39 +12,35 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> inorder;
+        vector<int> ans;
         TreeNode *curr = root;
         while(curr != nullptr)
         {
-//             if left child doesn't exist
             if(curr->left == nullptr)
             {
-//                 print the root and goto right
-                inorder.push_back(curr->val);
+                ans.push_back(curr->val);
                 curr = curr->right;
             }
             else
             {
                 TreeNode *prev = curr->left;
-                while(prev->right != nullptr && prev->right != curr)
+                while(prev->right && prev->right != curr)
                 {
                     prev = prev->right;
                 }
-//                 if there was no thread
                 if(prev->right == nullptr)
                 {
                     prev->right = curr;
                     curr = curr->left;
                 }
-//                 if thread was present
                 else
                 {
                     prev->right = nullptr;
-                    inorder.push_back(curr->val);
+                    ans.push_back(curr->val);
                     curr = curr->right;
                 }
             }
         }
-        return inorder;
+        return ans;
     }
 };
