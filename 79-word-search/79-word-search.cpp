@@ -34,8 +34,6 @@ public:
         int sz = word.size();
         int m = board.size();
         int n = board[0].size();
-        vector<vector<int>> visited(m, vector<int> (n, 0));
-        vector<vector<vector<int>>> dp(m, vector<vector<int>> (n, vector<int> (sz + 1, -1)));
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
