@@ -8,9 +8,6 @@ public:
         if(i == 2)
             return 2;
         
-        if(i == 3)
-            return 5;
-        
         int cut = 0;
         for(int k=0;k<n;k++)
         {
