@@ -1,42 +1,42 @@
 class Solution {
 public:
+    vector<int> dx{1, -1, 0, 0};
+    vector<int> dy{0, 0, 1, -1};
     
-    int visited[301][301];
-    vector<int>dx{-1,0,0,1};
-    vector<int>dy{0,1,-1,0};
-    
-    bool isValid(vector<vector<char>>& grid,int m,int n,int x,int y)
+    bool isValid(vector<vector<char>>& grid, vector<vector<int>> &visited, int i, int j, int m, int n)
     {
-        if(x<0 || y<0 || x>=m || y>=n)
+        if(i < 0 || i >= m || j < 0 || j >= n)
             return false;
-        if(visited[x][y] || grid[x][y]=='0')
+        
+        if(visited[i][j] || grid[i][j] == '0')
             return false;
         
         return true;
     }
     
-    void dfs(vector<vector<char>>& grid,int m,int n,int x,int y)
+    void dfs(vector<vector<char>> &grid, vector<vector<int>> &visited, int x, int y, int m, int n)
     {
-        visited[x][y]=1;
+        visited[x][y] = 1;
         for(int i=0;i<4;i++)
         {
-            if(isValid(grid,m,n,x+dx[i],y+dy[i]))
-                dfs(grid,m,n,x+dx[i],y+dy[i]);
+            if(isValid(grid, visited, x + dx[i], y + dy[i], m, n))
+                dfs(grid, visited, x + dx[i], y + dy[i], m, n);
         }
     }
     
     int numIslands(vector<vector<char>>& grid) {
-        int m=grid.size();
-        int n=grid[0].size();
-        int count=0;
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> visited(m, vector<int> (n, 0));
+        int count = 0;
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
-                if(!visited[i][j] && grid[i][j]=='1')
+                if(isValid(grid, visited, i, j, m, n))
                 {
-                    dfs(grid,m,n,i,j);
                     count++;
+                    dfs(grid, visited, i, j, m, n);
                 }
             }
         }
