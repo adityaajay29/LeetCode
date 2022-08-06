@@ -14,29 +14,35 @@ public:
         return true;
     }
     
-    void dfs(vector<vector<char>> &grid, vector<vector<int>> &visited, int x, int y, int m, int n)
-    {
-        visited[x][y] = 1;
-        for(int i=0;i<4;i++)
-        {
-            if(isValid(grid, visited, x + dx[i], y + dy[i], m, n))
-                dfs(grid, visited, x + dx[i], y + dy[i], m, n);
-        }
-    }
-    
     int numIslands(vector<vector<char>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
         vector<vector<int>> visited(m, vector<int> (n, 0));
         int count = 0;
+        queue<pair<int, int>> q;
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(isValid(grid, visited, i, j, m, n))
                 {
+                    q.push({i, j});
                     count++;
-                    dfs(grid, visited, i, j, m, n);
+                    visited[i][j] = 1;
+                    while(!q.empty())
+                    {
+                        int x = q.front().first;
+                        int y = q.front().second;
+                        q.pop();
+                        for(int i=0;i<4;i++)
+                        {
+                            if(isValid(grid, visited, x + dx[i], y + dy[i], m, n))
+                            {
+                                visited[x + dx[i]][y + dy[i]] = 1;
+                                q.push({x + dx[i], y + dy[i]});
+                            }
+                        }
+                    }
                 }
             }
         }
