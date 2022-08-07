@@ -1,39 +1,26 @@
-class node
+struct node
 {
-    public:
-    node *links[26];
-    bool flag = false;
+    node *arr[26];
+    bool end;
     
-    bool containsKey(char c)
+    node()
     {
-        return (links[c - 'a'] != nullptr);
+        end = false;
+        for(int i=0;i<26;i++)
+        {
+            arr[i] = nullptr;
+        }
     }
     
-    void put(char c, node *temp)
+    bool contains(char c)
     {
-        links[c - 'a'] = temp;
-    }
-    
-    node *get(char c)
-    {
-        return links[c - 'a'];
-    }
-    
-    void setEnd()
-    {
-       flag = true; 
-    }
-    
-    bool isEnd()
-    {
-        return flag;
+        return (arr[c - 'a'] != nullptr);
     }
 };
 
 class Trie {
-private : 
+private:
     node *root;
-    
 public:
     Trie() {
         root = new node();
@@ -41,39 +28,35 @@ public:
     
     void insert(string word) {
         node *curr = root;
-        for(int i=0;i<word.size();i++)
+        for(char c : word)
         {
-            if(!curr->containsKey(word[i]))
-            {
-                curr->put(word[i], new node());
-            }
-            curr = curr->get(word[i]);
+            if(!curr->contains(c))
+                curr->arr[c - 'a'] = new node();
+            curr = curr->arr[c - 'a'];
         }
-        curr->setEnd();
+        curr->end = true;
     }
     
     bool search(string word) {
         node *curr = root;
-        for(int i=0;i<word.size();i++)
+        for(char c : word)
         {
-            if(!curr->containsKey(word[i]))
-            {
+            if(!curr->contains(c))
                 return false;
-            }
-            curr = curr->get(word[i]);
+            
+            curr = curr->arr[c - 'a'];
         }
-        return curr->isEnd();
+        return curr->end;
     }
     
     bool startsWith(string prefix) {
         node *curr = root;
-        for(int i=0;i<prefix.size();i++)
+        for(char c : prefix)
         {
-            if(!curr->containsKey(prefix[i]))
-            {
+            if(!curr->contains(c))
                 return false;
-            }
-            curr = curr->get(prefix[i]); 
+            
+            curr = curr->arr[c - 'a'];
         }
         return true;
     }
