@@ -17,8 +17,7 @@ public:
             return nullptr;
         
         int mid = l + (h - l) / 2;
-        
-        TreeNode *root = new TreeNode (nums[mid]);
+        TreeNode *root = new TreeNode(nums[mid]);
         root->left = solve(nums, l, mid - 1);
         root->right = solve(nums, mid + 1, h);
         
@@ -26,8 +25,8 @@ public:
     }
     
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        int n = nums.size();
-        
-        return solve(nums, 0, n - 1);
+        int l = 0;
+        int h = nums.size() - 1;
+        return solve(nums, l, h);
     }
 };
