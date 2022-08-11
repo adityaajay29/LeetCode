@@ -16,14 +16,14 @@ public:
         if(root == nullptr)
             return true;
         
-        if(root->val <= mini || root->val >= maxi)
+        int val = root->val;
+        if(val <= mini || val >= maxi)
             return false;
         
-        if(solve(root->left, mini, root->val) == false)
+        if(solve(root->left, mini, val) == false)
             return false;
         
-        return solve(root->right, root->val, maxi);
-        
+        return solve(root->right, val, maxi);
     }
     
     bool isValidBST(TreeNode* root) {
