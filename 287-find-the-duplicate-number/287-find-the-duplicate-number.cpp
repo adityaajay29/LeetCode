@@ -1,7 +1,7 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int slow = nums[0]; 
+        int slow = nums[0];
         int fast = nums[0];
         do
         {
@@ -9,6 +9,7 @@ public:
             fast = nums[nums[fast]];
         }
         while(slow != fast);
+        
         fast = nums[0];
         while(slow != fast)
         {
