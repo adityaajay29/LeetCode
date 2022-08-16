@@ -1,18 +1,18 @@
 class Solution {
 public:
-    bool isPalindrome(string str, int l, int h)
+    bool isPali(string &s, int i, int j)
     {
-        while(l<h)
+        while(i < j)
         {
-            if(str[l] != str[h])
+            if(s[i] != s[j])
                 return false;
-            l++;
-            h--;
+            
+            i++, j--;
         }
         return true;
     }
     
-    void solve(string s, vector<vector<string>> &ans, vector<string> temp, int i)
+    void solve(string &s, vector<vector<string>> &ans, vector<string> temp, int i)
     {
         if(i == s.size())
         {
@@ -22,10 +22,10 @@ public:
         
         for(int j=i;j<s.size();j++)
         {
-            if(isPalindrome(s, i, j))
+            if(isPali(s, i, j))
             {
-                temp.push_back(s.substr(i, j-i+1));
-                solve(s, ans, temp, j+1);
+                temp.push_back(s.substr(i, j - i + 1));
+                solve(s, ans, temp, j + 1);
                 temp.pop_back();
             }
         }
