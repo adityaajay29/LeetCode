@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void solve(vector<vector<int>> &ans, vector<int> nums, int l, int h)
+    void solve(vector<int> &nums, vector<vector<int>> &ans, int l, int h)
     {
         if(l == h)
         {
@@ -10,15 +10,16 @@ public:
         for(int i=l;i<=h;i++)
         {
             swap(nums[l], nums[i]);
-            solve(ans, nums, l+1, h);
+            solve(nums, ans, l + 1, h);
             swap(nums[l], nums[i]);
         }
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> ans;
         int n = nums.size();
-        solve(ans, nums, 0, n-1);
+        vector<vector<int>> ans;
+        solve(nums, ans, 0, n - 1);
+        
         return ans;
     }
 };
