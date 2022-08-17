@@ -1,15 +1,16 @@
 class Solution {
 public:
-    bool isDistanceValid(int minDist, vector<int> &posi, int maxBalls)
+    bool isPossible(vector<int> &arr, int maxForce, int maxBalls)
     {
+        int posi = arr[0];
         int balls = 1;
-        int currPosi = posi[0];
-        for(int i=1;i<posi.size();i++)
+        for(int i=1;i<arr.size();i++)
         {
-            if(posi[i] - currPosi >= minDist)
+            int force = arr[i] - posi;
+            if(force >= maxForce)
             {
                 balls++;
-                currPosi = posi[i];
+                posi = arr[i];
             }
             if(balls == maxBalls)
                 return true;
@@ -21,14 +22,12 @@ public:
         sort(position.begin(), position.end());
         int n = position.size();
         int l = 1;
-        int h = position[n -1] - position[0];
-        
+        int h = position[n - 1] - position[0];
         int ans = 0;
-        
         while(l <= h)
         {
-            int mid = l + (h - l)/2;
-            if(isDistanceValid(mid, position, m))
+            int mid = l + (h - l) / 2;
+            if(isPossible(position, mid, m))
             {
                 ans = mid;
                 l = mid + 1;
