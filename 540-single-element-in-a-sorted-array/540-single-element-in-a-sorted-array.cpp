@@ -1,31 +1,31 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
+        int n = nums.size();
         int l = 0;
-        int h = nums.size()-1;
+        int h = n - 1;
         while(l <= h)
         {
             if(l == h)
                 return nums[l];
             
-            int mid = l + (h - l)/2;
+            int mid = l + (h - l) / 2;
             if(nums[mid - 1] != nums[mid] && nums[mid + 1] != nums[mid])
                 return nums[mid];
             
-            int lc = mid - l;
-            int rc = h - mid;
-            if(lc % 2 == 0)
+            int lLen = mid - l;
+            if(lLen % 2 == 0)
             {
                 if(nums[mid - 1] == nums[mid])
                     h = mid;
-                else if(nums[mid + 1] == nums[mid])
+                else
                     l = mid;
             }
             else
             {
                 if(nums[mid - 1] == nums[mid])
                     l = mid + 1;
-                else if(nums[mid + 1] == nums[mid])
+                else
                     h = mid - 1;
             }
         }
