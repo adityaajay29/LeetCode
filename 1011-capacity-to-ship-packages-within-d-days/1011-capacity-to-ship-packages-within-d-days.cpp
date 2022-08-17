@@ -1,50 +1,42 @@
 class Solution {
 public:
-    bool isValidShip(int maxWeight, vector<int> &wt, int maxDays)
+    bool isPossible(vector<int> &arr, int maxWt, int maxDays)
     {
-        int weight = 0;
+        int currWt = 0;
         int days = 1;
-        for(int i=0;i<wt.size();i++)
+        for(int i=0;i<arr.size();i++)
         {
-            if(weight + wt[i] > maxWeight)
+            if(currWt + arr[i] > maxWt)
             {
                 days++;
-                weight = wt[i];
-                if(weight > maxWeight)
+                currWt = arr[i];
+                if(currWt > maxWt)
                     return false;
             }
             else
-                weight += wt[i];
+                currWt += arr[i];
         }
-        return (days > maxDays ? false : true);
+        return days <= maxDays;
     }
     
     int shipWithinDays(vector<int>& weights, int days) {
-        int n = weights.size();
-        if(days > n)
-            return -1;
-        
-        int l = 0;
+        int l = 0, h = 0;
         for(int x : weights)
-            l = max(l, x);
-        
-        int h = weights[0];
-        for(int i=1;i<n;i++)
         {
-            h += weights[i];
+            l = min(l, x);
+            h += x;
         }
-        
-        int ans = -1;
-        
+        int ans = 0;
         while(l <= h)
         {
-            int mid = l + (h - l)/2;
-            if(isValidShip(mid, weights, days))
+            int mid = l + (h - l) / 2;
+            if(isPossible(weights, mid, days))
             {
                 ans = mid;
                 h = mid - 1;
             }
-            else l = mid + 1;
+            else
+                l = mid + 1;
         }
         return ans;
     }
