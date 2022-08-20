@@ -1,18 +1,18 @@
 class Solution {
 public:
-    unordered_map<string,string>mp;
-    int code=1;
-    string codeWord="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    unordered_map<string, string> mp;
+    int code = 1;
+    string codeWord = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
 //     function to generate random code words depending on value of code
     string append()
     {
         string key;
-        int n=code;
-        while(n>0)
+        int n = code;
+        while(n > 0)
         {
-            key.push_back(codeWord[code%62]);
-            n/=62;
+            key.push_back(codeWord[code % 62]);
+            n /= 62;
         }
         return key;
     }
@@ -20,12 +20,13 @@ public:
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
         // cout<<append()<<endl;
-        string ans="https://tinyurl.com/"+append();
+        string shortUrl = "https://tinyurl.com/" + append();
 //         updating the value of code
+        // cout<<code<<endl;
         code++;
 //         making short long code key val pair
-        mp[ans]=longUrl;
-        return ans;
+        mp[shortUrl] = longUrl;
+        return shortUrl;
     }
 
     // Decodes a shortened URL to its original URL.
