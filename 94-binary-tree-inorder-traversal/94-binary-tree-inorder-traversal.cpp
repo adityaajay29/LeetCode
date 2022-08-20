@@ -12,9 +12,13 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
+        if(root == nullptr)
+            return {};
+        
         vector<int> ans;
         TreeNode *curr = root;
-        while(curr != nullptr)
+        
+        while(curr)
         {
             if(curr->left == nullptr)
             {
