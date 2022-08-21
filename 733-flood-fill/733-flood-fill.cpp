@@ -1,37 +1,41 @@
 class Solution {
 public:
     vector<int> dx{1, -1, 0, 0};
-    vector<int> dy{0, 0, -1, 1};
+    vector<int> dy{0, 0, 1, -1};
     
-    bool isValid(vector<vector<int>>& image, int i,int j, int m, int n, int &same)
+    bool isValid(vector<vector<int>> &grid, int x, int y, int &original, int m, int n)
     {
-        if(i < 0 || i >= m || j < 0 || j >= n)
+        if(x < 0 || x >= m || y < 0 || y >= n)
             return false;
         
-        if(image[i][j] != same)
+        if(grid[x][y] != original)
             return false;
         
         return true;
     }
     
-    void dfs(vector<vector<int>> &image, int x, int y, int m, int n, int same, int color)
-    {
-        image[x][y] = color;
-        for(int i=0;i<4;i++)
-        { 
-            if(isValid(image, x + dx[i], y + dy[i], m, n, same))
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int original = image[sr][sc];
+        
+        if(original == color)
+            return image;
+        
+        int m = image.size(), n = image[0].size();
+        
+        queue<pair<int, int>> q;
+        q.push({sr, sc});
+        while(!q.empty())
+        {
+            int x = q.front().first;
+            int y = q.front().second;
+            q.pop();
+            image[x][y] = color;
+            for(int i=0;i<4;i++)
             {
-                dfs(image, x + dx[i], y + dy[i], m, n, same, color);
+                if(isValid(image, x + dx[i], y + dy[i], original, m, n))
+                    q.push({x + dx[i], y + dy[i]});
             }
         }
-    }
-    
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        int m = image.size();
-        int n= image[0].size();
-        int same = image[sr][sc];
-        if(color != same)
-            dfs(image, sr, sc, m, n, same, color);
         return image;
     }
 };
