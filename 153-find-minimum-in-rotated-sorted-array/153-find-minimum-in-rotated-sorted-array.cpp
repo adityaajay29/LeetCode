@@ -1,7 +1,28 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        nth_element(nums.begin(), nums.begin() + 0, nums.end());
-        return nums[0];
+        int n = nums.size();
+        int l = 0, h = n - 1;
+        if(n == 1)
+            return nums[0];
+        
+        if(nums[0] < nums[n - 1])
+            return nums[0];
+        
+        while(l <= h)
+        {
+            int mid = l + (h - l) / 2;
+            if(nums[mid + 1] < nums[mid])
+                return nums[mid + 1];
+            
+            if(nums[mid - 1] > nums[mid])
+                return nums[mid];
+            
+            if(nums[mid] > nums[h])
+                l = mid + 1;
+            else
+                h= mid - 1;
+        }
+        return INT_MAX;
     }
 };
