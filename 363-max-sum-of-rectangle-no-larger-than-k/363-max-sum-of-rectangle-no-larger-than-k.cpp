@@ -1,35 +1,34 @@
 class Solution {
 public:
-    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
-        int row = matrix.size();
-        int col = matrix[0].size();
-        int res = INT_MIN;
-        for(int c=0;c<col;c++)
+    int maxSumSubmatrix(vector<vector<int>>& m, int k) {
+        int res = INT_MIN, rows = m.size(), cols = m[0].size();
+        for (int l = 0; l < cols; ++l) 
         {
-            vector<int> sums(row, 0);
-            for(int j=c;j<col;j++)
+            vector<int> sums(rows, 0);
+            for (int r = l; r < cols; ++r) 
             {
-                for(int i=0;i<row;i++)
+                int kadane = 0, max_kadane = INT_MIN;
+                for (int i = 0; i < rows; ++i) 
                 {
-                    sums[i] += matrix[i][j];
+                    sums[i] += m[i][r];
+                    kadane = max(kadane + sums[i], sums[i]);
+                    max_kadane = max(max_kadane, kadane);
                 }
-                
-                set<int> set;
-                set.insert(0);
-                int currSum = 0, currMax = INT_MIN;
-                for(int x : sums)
-                {
-                    currSum += x;
-                    auto it = set.lower_bound(currSum - k);
-                    if(it != set.end())
-                    {
-                        currMax = max(currMax, currSum - *it);
-                    }
-                    set.insert(currSum);
+                if (max_kadane <= k) {
+                    res = max(res, max_kadane);
+                    continue;
                 }
-                res = max(res, currMax);
+                set<int> s = {0};
+                int run_sum = 0;
+                for (int sum : sums) {
+                    run_sum += sum;
+                    auto it = s.lower_bound(run_sum - k);
+                    if (it != end(s))
+                        res = max(res, run_sum - *it);
+                    s.insert(run_sum);
+                }
             }
         }
         return res;
-    }
+    }  
 };
