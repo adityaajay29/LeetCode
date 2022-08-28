@@ -9,7 +9,8 @@ public:
             return dp[i][j + 1];
         
         int notTake = solve(nums, i + 1, j, dp);
-        int take = 0;
+        int take = INT_MIN;
+        
         if(j == -1 || nums[i] > nums[j])
             take = 1 + solve(nums, i + 1, i, dp);
         
