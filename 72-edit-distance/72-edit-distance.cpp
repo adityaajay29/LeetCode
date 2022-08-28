@@ -1,36 +1,30 @@
 class Solution {
 public:
+    int solve(string &s1, string &s2, int i, int j, vector<vector<int>> &dp)
+    {
+        if(i < 0)
+            return j + 1;
+        
+        if(j < 0)
+            return i + 1;
+        
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+        if(s1[i] == s2[j])
+            return dp[i][j] = solve(s1, s2, i - 1, j - 1, dp);
+        
+        int a = solve(s1, s2, i - 1, j, dp);
+        int b = solve(s1, s2, i, j - 1, dp);
+        int c = solve(s1, s2, i - 1, j - 1, dp);
+        
+        return dp[i][j] = 1 + min({a, b, c});
+    }
+    
     int minDistance(string word1, string word2) {
         int n1 = word1.size();
         int n2 = word2.size();
-        vector<int> prev(n2 + 1);
-        
-        prev[0] = 0;
-        
-        for(int j=0;j<=n2;j++)
-        {
-            prev[j] = j;
-        }
-        
-        for(int i=1;i<=n1;i++)
-        {
-            vector<int> curr(n2 + 1, 0);
-            curr[0] = i;
-            for(int j=1;j<=n2;j++)
-            {
-                if(word1[i - 1] == word2[j - 1])
-                    curr[j] = 0 + prev[j - 1];
-                else 
-                {
-                    int ins = 1 + curr[j - 1];
-                    int del = 1 + prev[j];
-                    int rep = 1 + prev[j - 1];
-                    curr[j] = min(min(ins, del), rep);
-                }           
-            }
-            prev = curr;
-        }
-        
-        return prev[n2];
+        vector<vector<int>> dp(n1, vector<int> (n2, -1));
+        return solve(word1, word2, n1 - 1, n2 - 1, dp);
     }
 };
