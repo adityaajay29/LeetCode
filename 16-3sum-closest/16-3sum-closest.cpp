@@ -7,7 +7,6 @@ public:
         int ans = 0;
         for(int i=0;i<n;i++)
         {
-            int target2 = target - nums[i];
             int l = i + 1, h = n - 1;
             while(l < h)
             {
@@ -17,6 +16,7 @@ public:
                 
 //                 -23
 //                 -8, -4, -2, -1, 1, 3, 3, 5, 9, 11
+//                 o/p => -14
                 
                 if(abs(twoSum + nums[i] - target) < diff)
                 {
