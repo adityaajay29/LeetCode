@@ -1,43 +1,36 @@
 class Solution {
 public:
-    bool dp[202][20002];
+    bool solve(vector<int>& nums, int i, int sum, vector<vector<int>> &dp)
+    {
+        if(i == 0)
+            return nums[0] == sum;
+        
+        if(sum == 0)
+            return true;
+        
+        if(dp[i][sum] != -1)
+            return dp[i][sum];
+        
+        int notTake = solve(nums, i - 1, sum, dp);
+        int take = false;
+        
+        if(nums[i] <= sum)
+            take = solve(nums, i - 1, sum - nums[i], dp);
+        
+        return dp[i][sum] = take || notTake;
+    }
     
     bool canPartition(vector<int>& nums) {
-        int n=nums.size();
-        int wt=nums[0];
-        for(int i=1;i<n;i++)
-        {
-            wt+=nums[i];
-        }
+        int n = nums.size();
+        int sum = 0;
+        for(int x : nums)
+            sum += x;
         
-        if(wt%2)
+        if(sum % 2)
             return false;
         
-//         problem boils down to subset sum problem of 01knapsack approach
-        
-        int sum=wt/2;
-        for(int i=0;i<=n;i++)
-        {
-            for(int j=0;j<=sum;j++)
-            {
-                if(i == 0)
-                    dp[i][j] = false;
-                if(j == 0)
-                    dp[i][j] = true;
-            }
-        }
-        for(int i=1;i<=n;i++)
-        {
-            for(int j=1;j<=sum;j++)
-            {
-                if(nums[i-1] <= j)
-                {
-                    dp[i][j] = dp[i-1][j-nums[i-1]] || dp[i-1][j];
-                }
-                else 
-                    dp[i][j] = dp[i-1][j];
-            }
-        }
-        return dp[n][sum];
+        int target = sum / 2;
+        vector<vector<int>> dp(n, vector<int> (target + 1, -1));
+        return solve(nums, n - 1, target, dp);
     }
 };
