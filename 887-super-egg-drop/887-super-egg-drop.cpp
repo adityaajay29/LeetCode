@@ -1,45 +1,40 @@
 class Solution {
 public:
-    int dp[101][10001];
-    
-    int solver(int k, int n)
+    int solve(int eggs, int floors, vector<vector<int>> &dp)
     {
-        //  base case 1
-        if(n == 0 || n == 1)
-            return n;
+        if(floors == 0 || floors == 1)
+            return floors;
         
-        //  base case 2 (in worst case)
-        if(k == 1)
-            return n;
+        if(eggs == 1)
+            return floors;
         
-        if(dp[k][n] != -1)
-            return dp[k][n];
+        if(dp[eggs][floors] != -1)
+            return dp[eggs][floors];
         
-        int attempts = INT_MAX;
+        int moves = INT_MAX;
         
-        //  possible candidates of f
-//         using binary Search 
-        int l=1;
-        int h=n;
-        while(l<=h)
+//         let the current floor be floor
+        int l = 1, h = floors;
+        while(l <= h)
         {
-            int mid = (l+h)/2;
-            int breaks = solver(k-1, mid-1);
-            int notBreaks = solver(k, n-mid);
+            int floor = l + (h - l) / 2;
+            int breaks = solve(eggs - 1, floor - 1, dp);
+            int notBreaks = solve(eggs, floors - floor, dp);
+            
+//             we have to minimise the moves in worst case
             int worstCase = 1 + max(breaks, notBreaks);
-            attempts = min(attempts, worstCase);
-            if(breaks < notBreaks)
-//                 to get min attempts in worst case, we goto above floors
-                l = mid + 1;
+            if(breaks > notBreaks)
+                h = floor - 1;
             else
-//                 to goto min attempts in worst case, we goto lower floors
-                h = mid - 1;
+                l = floor + 1;
+            
+            moves = min(moves, worstCase);
         }
-        return dp[k][n] = attempts;
+        return dp[eggs][floors] = moves;
     }
     
-    int superEggDrop(int k, int n) {
-        memset(dp, -1, sizeof(dp));
-        return solver(k, n);
+    int superEggDrop(int eggs, int floors) {
+        vector<vector<int>> dp(eggs + 1, vector<int> (floors + 1, -1));
+        return solve(eggs, floors, dp);
     }
 };
