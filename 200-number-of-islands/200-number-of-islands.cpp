@@ -3,15 +3,25 @@ public:
     vector<int> dx{1, -1, 0, 0};
     vector<int> dy{0, 0, 1, -1};
     
-    bool isValid(vector<vector<char>>& grid, vector<vector<int>> &visited, int i, int j, int m, int n)
+    bool isValid(vector<vector<char>>& grid, vector<vector<int>> &visited, int x, int y)
     {
-        if(i < 0 || i >= m || j < 0 || j >= n)
+        if(x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size())
             return false;
         
-        if(visited[i][j] || grid[i][j] == '0')
+        if(grid[x][y] == '0' || visited[x][y])
             return false;
         
         return true;
+    }
+    
+    void dfs(vector<vector<char>>& grid, vector<vector<int>> &visited, int x, int y)
+    {
+        visited[x][y] = 1;
+        for(int i=0;i<4;i++)
+        {
+            if(isValid(grid, visited, x + dx[i], y + dy[i]))
+                dfs(grid, visited, x + dx[i], y + dy[i]);
+        }
     }
     
     int numIslands(vector<vector<char>>& grid) {
@@ -19,30 +29,14 @@ public:
         int n = grid[0].size();
         vector<vector<int>> visited(m, vector<int> (n, 0));
         int count = 0;
-        queue<pair<int, int>> q;
-        for(int i=0;i<m;i++)
+        for(int x=0;x<m;x++)
         {
-            for(int j=0;j<n;j++)
+            for(int y=0;y<n;y++)
             {
-                if(isValid(grid, visited, i, j, m, n))
+                if(isValid(grid, visited, x, y))
                 {
-                    q.push({i, j});
                     count++;
-                    visited[i][j] = 1;
-                    while(!q.empty())
-                    {
-                        int x = q.front().first;
-                        int y = q.front().second;
-                        q.pop();
-                        for(int i=0;i<4;i++)
-                        {
-                            if(isValid(grid, visited, x + dx[i], y + dy[i], m, n))
-                            {
-                                visited[x + dx[i]][y + dy[i]] = 1;
-                                q.push({x + dx[i], y + dy[i]});
-                            }
-                        }
-                    }
+                    dfs(grid, visited, x, y);
                 }
             }
         }
