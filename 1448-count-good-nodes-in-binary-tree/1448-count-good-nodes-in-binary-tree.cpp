@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-    void solve(TreeNode *root, int &ans, int val, int maxi)
+    void solve(TreeNode *root, int &ans, int maxi)
     {
         if(root == nullptr)
             return;
         
-        if(root->val >= val && root->val >= maxi)
+        if(root->val >= maxi)
         {
             ans++;
             maxi = root->val;
         }
-        solve(root->left, ans, val, maxi);
-        solve(root->right, ans, val, maxi);
+        solve(root->left, ans, maxi);
+        solve(root->right, ans, maxi);
     }
     
     int goodNodes(TreeNode* root) {
@@ -31,8 +31,8 @@ public:
         
         int ans = 1;
         int val = root->val;
-        solve(root->left, ans, val, val);
-        solve(root->right, ans, val, val);
+        solve(root->left, ans, val);
+        solve(root->right, ans, val);
         return ans;
     }
 };
