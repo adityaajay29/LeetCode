@@ -11,21 +11,32 @@
  */
 class Solution {
 public:
+    int height(TreeNode *root)
+    {
+        if(root == nullptr)
+            return 0;
+        
+        int left = height(root->left);
+        int right = height(root->right);
+        return 1 + max(left, right);
+    }
+    
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
         if(root == nullptr)
             return {};
         
-        vector<vector<int>> ans;
+        int maxLvl = height(root);
+        vector<vector<int>> ans(maxLvl);
         queue<pair<TreeNode *, int>> q;
-        q.push({root, 0});
+        q.push({root, 1});
         while(!q.empty())
         {
             int sz = q.size();
+            int lvl = q.front().second;
             vector<int> temp;
             while(sz--)
             {
                 TreeNode *curr = q.front().first;
-                int lvl = q.front().second;
                 q.pop();
                 if(curr->left)
                     q.push({curr->left, lvl + 1});
@@ -33,9 +44,8 @@ public:
                     q.push({curr->right, lvl + 1});
                 temp.push_back(curr->val);
             }
-            ans.push_back(temp);
+            ans[maxLvl - lvl] = temp;
         }
-        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
