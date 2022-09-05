@@ -16,30 +16,30 @@ public:
             return {};
         
         vector<int> ans;
-        TreeNode *curr = root;
         
+        TreeNode *curr = root;
         while(curr)
         {
-            if(curr->left == nullptr)
+            if(!curr->left)
             {
                 ans.push_back(curr->val);
                 curr = curr->right;
             }
             else
             {
-                TreeNode *prev = curr->left;
-                while(prev->right && prev->right != curr)
+                TreeNode *temp = curr->left;
+                while(temp->right && temp->right != curr)
                 {
-                    prev = prev->right;
+                    temp = temp->right;
                 }
-                if(prev->right == nullptr)
+                if(temp->right == nullptr)
                 {
-                    prev->right = curr;
+                    temp->right = curr;
                     curr = curr->left;
                 }
                 else
                 {
-                    prev->right = nullptr;
+                    temp->right = nullptr;
                     ans.push_back(curr->val);
                     curr = curr->right;
                 }
