@@ -5,7 +5,11 @@ public:
         if(nums1 == nums2)
             return n1;
         
-        vector<vector<int>> dp(n1 + 1, vector<int> (n2 + 1));
+        if(n1 < n2)
+            return findLength(nums2, nums1);
+        
+        vector<int> prev(n2 + 1);
+        vector<int> curr(n2 + 1);
         int ans = 0;
         for(int i=1;i<=n1;i++)
         {
@@ -13,14 +17,15 @@ public:
             {
                 if(nums1[i - 1] == nums2[j - 1])
                 {
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    prev[j] = 1 + curr[j - 1];
                 }
                 else
                 {
-                    dp[i][j] = 0;
+                    prev[j] = 0;
                 }
-                ans = max(ans, dp[i][j]);
+                ans = max(ans, prev[j]);
             }
+            curr = prev;
         }
         return ans;
     }
