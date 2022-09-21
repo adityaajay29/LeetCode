@@ -5,7 +5,7 @@ public:
         vector<int> ans;
         for(int x : nums)
         {
-            if(abs(x % 2) == 0)
+            if(x % 2 == 0)
                 sum += x;
         }
         for(vector<int> &v : queries)
@@ -13,9 +13,9 @@ public:
             int val = v[0], ind = v[1];
             int prev = nums[ind];
             nums[ind] += val;
-            if(abs(prev) % 2 == 0)
+            if(prev % 2 == 0)
                 sum -= prev;
-            if(abs(nums[ind]) % 2 == 0)
+            if(nums[ind] % 2 == 0)
                 sum += nums[ind];
             ans.push_back(sum);
         }
