@@ -3,14 +3,14 @@ public:
     vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
         int sum = 0, n = nums.size();
         vector<int> ans;
-        for(int i=0;i<n;i++)
+        for(int x : nums)
         {
-            if(abs(nums[i]) % 2 == 0)
-                sum += nums[i];
+            if(abs(x % 2) == 0)
+                sum += x;
         }
-        for(vector<int> &x : queries)
+        for(vector<int> &v : queries)
         {
-            int val = x[0], ind = x[1];
+            int val = v[0], ind = v[1];
             int prev = nums[ind];
             nums[ind] += val;
             if(abs(prev) % 2 == 0)
