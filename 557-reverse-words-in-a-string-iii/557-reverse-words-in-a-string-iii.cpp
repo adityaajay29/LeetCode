@@ -6,14 +6,14 @@ public:
         for(int j=0;j<n;j++)
         {
 //             reversing all the words except for last word
-            if(s[j]==' ')
+            if(s[j] == ' ')
             {
-                reverse(s.begin()+i,s.begin()+j);
-                i=j+1;
+                reverse(s.begin() + i, s.begin() + j);
+                i = j + 1;
             }
         }
 //         reversing last word
-        reverse(s.begin()+i,s.end());
+        reverse(s.begin() + i, s.end());
         return s;
     }
 };
