@@ -13,12 +13,12 @@ public:
         if(dp[n][target] != -1)
             return dp[n][target];
     
-        int sum = 0;
+        int ways = 0;
         for(int i=1;i<=k;i++)
         {
-            sum = (sum + solve(n - 1, k, target - i, dp) % mod) % mod;
+            ways = (ways + solve(n - 1, k, target - i, dp) % mod) % mod;
         }
-        return dp[n][target] = sum % mod;
+        return dp[n][target] = ways % mod;
     }
     
     int numRollsToTarget(int n, int k, int target) {
