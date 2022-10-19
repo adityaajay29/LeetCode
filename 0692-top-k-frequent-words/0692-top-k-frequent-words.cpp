@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    static bool myComp(pair<string, int> x, pair<string, int> y)
+    static bool myComp(pair<string, int> &x, pair<string, int> &y)
     {
         return x.second == y.second ? x.first < y.first : x.second > y.second;
     }
@@ -14,7 +14,7 @@ public:
         {
             mp[s]++;
         }
-        for(auto x : mp)
+        for(auto &x : mp)
         {
             bucket[x.second].push_back(x.first);
         }
@@ -22,7 +22,7 @@ public:
         vector<pair<string, int>> ans;
         for(int i=n;i>=0;i--)
         {
-            for(string s : bucket[i])
+            for(string &s : bucket[i])
             {
                 if(count == k)
                     break;
@@ -33,7 +33,7 @@ public:
         }
         sort(ans.begin(), ans.end(), myComp);
         vector<string> res;
-        for(auto x : ans)
+        for(auto &x : ans)
         {
             res.push_back(x.first);
         }
