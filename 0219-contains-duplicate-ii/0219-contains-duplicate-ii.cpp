@@ -11,11 +11,11 @@ public:
         {
             if(x.second.size() >= 2)
             {
-                vector<int> v = x.second;
+                vector<int> &v = x.second;
                 int i = 0;
                 while(i + 1 < v.size())
                 {
-                    if(abs(v[i + 1] - v[i]) <= k)
+                    if(v[i + 1] - v[i] <= k)
                         return true;
                     
                     i++;
