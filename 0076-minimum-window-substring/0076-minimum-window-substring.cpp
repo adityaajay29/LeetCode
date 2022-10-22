@@ -1,29 +1,29 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        unordered_map<char, int> letters; //unordered map for storing the characters in t that we need to check for in s
+        unordered_map<char, int> mp; 
         for(auto c : t)
-            letters[c]++; 
-        int count = 0; //counts number of t's letters in current window
-        int low = 0, min_length = INT_MAX, min_start = 0;     
-        for(int high = 0; high<s.length(); high++) 
+            mp[c]++; 
+        int count = 0; 
+        int low = 0, ans = INT_MAX, min_start = 0;     
+        for(int high = 0; high < s.length(); high++) 
         {
-            if(letters[s[high]] > 0) 
-                count++; //means that this letter is in t   
-            letters[s[high]]--; //reduce the count for the letter on which we are currently 
+            if(mp[s[high]] > 0) 
+                count++; 
+            mp[s[high]]--;  
             if(count == t.length()) 
-            { //if current windows contains all of the letters in t
-                while(low < high && letters[s[low]] < 0) 
+            {
+                while(low < high && mp[s[low]] < 0) 
                 {
-                    letters[s[low]]++;
-                    low++; //move low ahead if its not of any significance
+                    mp[s[low]]++;
+                    low++; 
                 }
-                if(min_length > high - low) 
-                    min_length = high - (min_start = low) + 1; //update the min length
-                letters[s[low++]]++; //move low ahaead and also increment the value
-                count--; //count-- as we are moving low ahead & low pointed to a char in t before
+                if(ans > high - low) 
+                    ans = high - (min_start = low) + 1; 
+                mp[s[low++]]++; 
+                count--; 
             }
         }
-        return min_length == INT_MAX ? "" : s.substr(min_start, min_length); //check for edge case & return the result
+        return ans == INT_MAX ? "" : s.substr(min_start, ans);
     }
 };
