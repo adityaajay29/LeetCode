@@ -11,12 +11,7 @@ public:
         vector<vector<string>> ans;
         for(auto &x : mp)
         {
-            vector<string> temp;
-            for(string &s : x.second)
-            {
-                temp.push_back(s);
-            }
-            ans.push_back(temp);
+            ans.push_back(x.second);
         }
         return ans;
     }
