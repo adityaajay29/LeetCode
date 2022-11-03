@@ -7,13 +7,13 @@ public:
         {
             int a = s[0] - 'a';
             int b = s[1] - 'a';
-            if(arr[b][a])
+            if(arr[a][b])
             {
                 ans += 4;
-                arr[b][a]--;
+                arr[a][b]--;
             }
             else
-                arr[a][b]++;
+                arr[b][a]++;
         }
         for(int i=0;i<26;i++)
         {
