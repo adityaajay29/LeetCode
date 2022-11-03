@@ -1,40 +1,28 @@
 class Solution {
 public:
     int longestPalindrome(vector<string>& words) {
-        unordered_map<string, int> mp;
-        int ans = 0, notSame = 0;
+        vector<vector<int>> arr(26, vector<int> (26));
+        int ans = 0;
         for(string &s : words)
         {
-            if(s[0] == s[1])
+            int a = s[0] - 'a';
+            int b = s[1] - 'a';
+            if(arr[b][a])
             {
-                if(mp[s])
-                {
-                    notSame--;
-                    mp[s]--;
-                    ans += 4;
-                }
-                else 
-                {
-                    mp[s]++;
-                    notSame++;
-                }
+                ans += 4;
+                arr[b][a]--;
             }
-            else 
+            else
+                arr[a][b]++;
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(arr[i][i])
             {
-                string temp = s;
-                reverse(temp.begin(), temp.end());
-                if(mp[temp])
-                {
-                    mp[temp]--;
-                    ans += 4;
-                }
-                else
-                    mp[s]++;
+                ans += 2;
+                break;
             }
         }
-        if(notSame)
-            ans += 2;
-        
         return ans;
     }
 };
